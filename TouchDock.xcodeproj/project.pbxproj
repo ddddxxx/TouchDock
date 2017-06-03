@@ -10,6 +10,7 @@
 		BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE501EE27A4300445D54 /* AppDelegate.swift */; };
 		BBE1CE551EE27A4300445D54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE541EE27A4300445D54 /* Assets.xcassets */; };
 		BBE1CE581EE27A4400445D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE561EE27A4400445D54 /* Main.storyboard */; };
+		BBE1CE621EE27B1A00445D54 /* DFRFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE1CE611EE27B1A00445D54 /* DFRFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +19,9 @@
 		BBE1CE541EE27A4300445D54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBE1CE571EE27A4400445D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBE1CE591EE27A4400445D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
+		BBE1CE611EE27B1A00445D54 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = TouchDock/Frameworks/DFRFoundation.framework; sourceTree = "<group>"; };
+		BBE1CE631EE27B2800445D54 /* TouchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchBar.h; path = "Supporting Files/TouchBar.h"; sourceTree = "<group>"; };
+		BBE1CE641EE27B3800445D54 /* TouchDock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "TouchDock-Bridging-Header.h"; path = "Supporting Files/TouchDock-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -25,6 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBE1CE621EE27B1A00445D54 /* DFRFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -34,6 +39,7 @@
 		BBE1CE441EE27A4300445D54 = {
 			isa = PBXGroup;
 			children = (
+				BBE1CE601EE27B1A00445D54 /* Frameworks */,
 				BBE1CE4F1EE27A4300445D54 /* TouchDock */,
 				BBE1CE4E1EE27A4300445D54 /* Products */,
 			);
@@ -51,11 +57,29 @@
 			isa = PBXGroup;
 			children = (
 				BBE1CE501EE27A4300445D54 /* AppDelegate.swift */,
-				BBE1CE541EE27A4300445D54 /* Assets.xcassets */,
 				BBE1CE561EE27A4400445D54 /* Main.storyboard */,
-				BBE1CE591EE27A4400445D54 /* Info.plist */,
+				BBE1CE5F1EE27AFB00445D54 /* Supporting Files */,
 			);
 			path = TouchDock;
+			sourceTree = "<group>";
+		};
+		BBE1CE5F1EE27AFB00445D54 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BBE1CE641EE27B3800445D54 /* TouchDock-Bridging-Header.h */,
+				BBE1CE631EE27B2800445D54 /* TouchBar.h */,
+				BBE1CE541EE27A4300445D54 /* Assets.xcassets */,
+				BBE1CE591EE27A4400445D54 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BBE1CE601EE27B1A00445D54 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BBE1CE611EE27B1A00445D54 /* DFRFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,6 +114,7 @@
 				TargetAttributes = {
 					BBE1CE4C1EE27A4300445D54 = {
 						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -243,11 +268,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TouchDock/Frameworks",
+				);
 				INFOPLIST_FILE = "TouchDock/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ddddxxx.TouchDock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TouchDock/Supporting Files/TouchDock-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -256,11 +288,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TouchDock/Frameworks",
+				);
 				INFOPLIST_FILE = "TouchDock/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ddddxxx.TouchDock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TouchDock/Supporting Files/TouchDock-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
