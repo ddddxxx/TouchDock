@@ -2,7 +2,9 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaDFRPlugin" version="12062"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -658,6 +660,27 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
+        </scene>
+        <!--App Scrubber View Controller-->
+        <scene sceneID="Kcx-cM-PkA">
+            <objects>
+                <customObject id="nF2-O6-VCh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <viewController identifier="AppScrubberViewController" storyboardIdentifier="AppScrubberViewController" id="PPf-6y-8xj" userLabel="App Scrubber View Controller" customClass="AppScrubberViewController" customModule="TouchDock" customModuleProvider="target" sceneMemberID="viewController">
+                    <scrubber key="view" id="rgR-FH-nBY">
+                        <rect key="frame" x="0.0" y="0.0" width="685" height="30"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <scrubberProportionalLayout key="scrubberLayout"/>
+                        <connections>
+                            <outlet property="dataSource" destination="PPf-6y-8xj" id="t2V-s8-Ya3"/>
+                            <outlet property="delegate" destination="PPf-6y-8xj" id="7Fo-IB-l3x"/>
+                        </connections>
+                    </scrubber>
+                    <connections>
+                        <outlet property="scrubber" destination="rgR-FH-nBY" id="m5a-PC-Wee"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="76" y="129"/>
         </scene>
     </scenes>
 </document>

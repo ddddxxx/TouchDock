@@ -18,7 +18,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     private override init() {
         super.init()
         touchBar.delegate = self
-        touchBar.defaultItemIdentifiers = []
+        touchBar.defaultItemIdentifiers = [.appScrubber]
     }
     
     func setupTouchBar() {
@@ -37,6 +37,10 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
+        case NSTouchBarItemIdentifier.appScrubber:
+            let touchBarItem = NSCustomTouchBarItem(identifier: identifier)
+            touchBarItem.viewController = (NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "AppScrubberViewController") as! AppScrubberViewController)
+            return touchBarItem
         default:
             return nil
         }
@@ -45,5 +49,6 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
 }
 
 extension NSTouchBarItemIdentifier {
+    static let appScrubber = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.appScrubber")
     static let systemTrayItem = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
 }
