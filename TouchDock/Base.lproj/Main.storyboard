@@ -656,7 +656,20 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="TouchDock" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="TouchDock" customModuleProvider="target">
+                    <connections>
+                        <outlet property="statusMenu" destination="CSP-S8-9Do" id="cQT-qb-NKn"/>
+                    </connections>
+                </customObject>
+                <menu id="CSP-S8-9Do">
+                    <items>
+                        <menuItem title="Quit TouchDock" keyEquivalent="q" id="njo-lX-Xnt">
+                            <connections>
+                                <action selector="terminate:" target="hnw-xV-0zn" id="Abx-j6-KH4"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>

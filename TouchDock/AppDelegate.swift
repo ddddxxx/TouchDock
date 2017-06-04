@@ -11,10 +11,17 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
+    @IBOutlet weak var statusMenu: NSMenu!
+    var statusItem: NSStatusItem!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
+        statusItem.menu = statusMenu
+        statusItem.button?.image = #imageLiteral(resourceName: "AppStore_16x")
+        statusItem.length = 30
+        
         if #available(OSX 10.12.2, *) {
-            TouchBarController.shared.setupTouchBar()
+            TouchBarController.shared.setupControlStripPresence()
         }
     }
     
