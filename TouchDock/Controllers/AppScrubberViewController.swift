@@ -18,15 +18,14 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidTerminateApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidActivateApplication, object: nil)
         
         updateRunningApplication()
     }
     
     func updateRunningApplication() {
-        runningApplications = NSWorkspace.shared().runningApplications.filter {
-            $0.activationPolicy == .regular
-        }
+        runningApplications = launchedApplications()
         scrubber.reloadData()
     }
     
@@ -45,4 +44,11 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
         return view
     }
     
+}
+
+private func launchedApplications() -> [NSRunningApplication] {
+    guard let pids = copyPIDArrayInFrontToBackOrder()?.takeRetainedValue() as? [pid_t] else {
+        return []
+    }
+    return pids.flatMap { NSRunningApplication(processIdentifier: $0) }
 }

@@ -22,3 +22,7 @@ extern void DFRSystemModalShowsCloseBoxWhenFrontMost(BOOL);
 + (void)presentSystemModalFunctionBar:(NSTouchBar *)touchBar systemTrayItemIdentifier:(NSTouchBarItemIdentifier)identifier;
 
 @end
+
+extern CFArrayRef _LSCopyApplicationArrayInFrontToBackOrder(uint32_t sessionID);
+extern void _LSASNExtractHighAndLowParts(void const* asn, UInt32* psnHigh, UInt32* psnLow);
+extern CFTypeID _LSASNGetTypeID(void);

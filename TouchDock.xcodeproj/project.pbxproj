@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB385D2B1EE3007500723427 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB385D2A1EE3007500723427 /* CoreServices.framework */; };
+		BB385D301EE30C8200723427 /* RunningApplications.c in Sources */ = {isa = PBXBuildFile; fileRef = BB385D2E1EE30C8200723427 /* RunningApplications.c */; };
 		BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE501EE27A4300445D54 /* AppDelegate.swift */; };
 		BBE1CE551EE27A4300445D54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE541EE27A4300445D54 /* Assets.xcassets */; };
 		BBE1CE581EE27A4400445D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE561EE27A4400445D54 /* Main.storyboard */; };
@@ -16,13 +18,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB385D2A1EE3007500723427 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		BB385D2E1EE30C8200723427 /* RunningApplications.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RunningApplications.c; path = CBridge/RunningApplications.c; sourceTree = "<group>"; };
+		BB385D2F1EE30C8200723427 /* RunningApplications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RunningApplications.h; path = CBridge/RunningApplications.h; sourceTree = "<group>"; };
 		BBE1CE4D1EE27A4300445D54 /* TouchDock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchDock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBE1CE501EE27A4300445D54 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBE1CE541EE27A4300445D54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBE1CE571EE27A4400445D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBE1CE591EE27A4400445D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
 		BBE1CE611EE27B1A00445D54 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = TouchDock/Frameworks/DFRFoundation.framework; sourceTree = "<group>"; };
-		BBE1CE631EE27B2800445D54 /* TouchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchBar.h; path = "Supporting Files/TouchBar.h"; sourceTree = "<group>"; };
+		BBE1CE631EE27B2800445D54 /* TouchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchBar.h; path = CBridge/TouchBar.h; sourceTree = "<group>"; };
 		BBE1CE641EE27B3800445D54 /* TouchDock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "TouchDock-Bridging-Header.h"; path = "Supporting Files/TouchDock-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBE1CE681EE27BE300445D54 /* TouchBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarController.swift; sourceTree = "<group>"; };
 		BBE1CE6A1EE27F2800445D54 /* AppScrubberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppScrubberViewController.swift; path = Controllers/AppScrubberViewController.swift; sourceTree = "<group>"; };
@@ -33,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB385D2B1EE3007500723427 /* CoreServices.framework in Frameworks */,
 				BBE1CE621EE27B1A00445D54 /* DFRFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -40,6 +46,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BB6D867A1EE3A99C00FC9A10 /* CBridge */ = {
+			isa = PBXGroup;
+			children = (
+				BBE1CE631EE27B2800445D54 /* TouchBar.h */,
+				BB385D2F1EE30C8200723427 /* RunningApplications.h */,
+				BB385D2E1EE30C8200723427 /* RunningApplications.c */,
+			);
+			name = CBridge;
+			sourceTree = "<group>";
+		};
 		BBE1CE441EE27A4300445D54 = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +80,7 @@
 				BBE1CE681EE27BE300445D54 /* TouchBarController.swift */,
 				BBE1CE561EE27A4400445D54 /* Main.storyboard */,
 				BBE1CE6C1EE27F2C00445D54 /* Controllers */,
+				BB6D867A1EE3A99C00FC9A10 /* CBridge */,
 				BBE1CE5F1EE27AFB00445D54 /* Supporting Files */,
 			);
 			path = TouchDock;
@@ -73,7 +90,6 @@
 			isa = PBXGroup;
 			children = (
 				BBE1CE641EE27B3800445D54 /* TouchDock-Bridging-Header.h */,
-				BBE1CE631EE27B2800445D54 /* TouchBar.h */,
 				BBE1CE541EE27A4300445D54 /* Assets.xcassets */,
 				BBE1CE591EE27A4400445D54 /* Info.plist */,
 			);
@@ -83,6 +99,7 @@
 		BBE1CE601EE27B1A00445D54 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BB385D2A1EE3007500723427 /* CoreServices.framework */,
 				BBE1CE611EE27B1A00445D54 /* DFRFoundation.framework */,
 			);
 			name = Frameworks;
@@ -170,6 +187,7 @@
 			files = (
 				BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */,
 				BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */,
+				BB385D301EE30C8200723427 /* RunningApplications.c in Sources */,
 				BBE1CE6B1EE27F2800445D54 /* AppScrubberViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,6 +356,7 @@
 				BBE1CE5E1EE27A4400445D54 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
