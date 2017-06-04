@@ -44,6 +44,13 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
         return view
     }
     
+    public func didFinishInteracting(with scrubber: NSScrubber) {
+        guard scrubber.selectedIndex > 0 else {
+            return
+        }
+        runningApplications[scrubber.selectedIndex].activate(options: .activateIgnoringOtherApps)
+    }
+    
 }
 
 private func launchedApplications() -> [NSRunningApplication] {
