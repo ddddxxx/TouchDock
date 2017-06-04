@@ -16,8 +16,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
-        statusItem.button?.image = #imageLiteral(resourceName: "AppStore_16x")
-        statusItem.length = 30
+        statusItem.button?.image = #imageLiteral(resourceName: "StatusBarIcon")
+        statusItem.length = 32
         statusItem.target = self
         statusItem.action = #selector(clickStatusItem)
         

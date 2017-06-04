@@ -24,7 +24,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     func setupControlStripPresence() {
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
         let item = NSCustomTouchBarItem(identifier: .systemTrayItem)
-        item.view = NSButton(image: #imageLiteral(resourceName: "AppStore_20x"), target: self, action: #selector(expand))
+        item.view = NSButton(image: #imageLiteral(resourceName: "TouchBarIcon"), target: self, action: #selector(expand))
         NSTouchBarItem.addSystemTrayItem(item)
         DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
     }
