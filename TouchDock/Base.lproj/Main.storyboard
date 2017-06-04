@@ -669,7 +669,9 @@
                     <scrubber key="view" id="rgR-FH-nBY">
                         <rect key="frame" x="0.0" y="0.0" width="685" height="30"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <scrubberProportionalLayout key="scrubberLayout"/>
+                        <scrubberFlowLayout key="scrubberLayout">
+                            <size key="itemSize" width="65" height="30"/>
+                        </scrubberFlowLayout>
                         <connections>
                             <outlet property="dataSource" destination="PPf-6y-8xj" id="t2V-s8-Ya3"/>
                             <outlet property="delegate" destination="PPf-6y-8xj" id="7Fo-IB-l3x"/>
