@@ -17,6 +17,7 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        scrubber.selectionBackgroundStyle = .roundedBackground
         
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidTerminateApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidActivateApplication, object: nil)
@@ -27,6 +28,7 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
     func updateRunningApplication() {
         runningApplications = launchedApplications()
         scrubber.reloadData()
+        scrubber.selectedIndex = 0
     }
     
     // MARK: - NSScrubberDataSource
