@@ -18,9 +18,16 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidActivateApplication, object: nil)
+        
+        updateRunningApplication()
+    }
+    
+    func updateRunningApplication() {
         runningApplications = NSWorkspace.shared().runningApplications.filter {
             $0.activationPolicy == .regular
         }
+        scrubber.reloadData()
     }
     
     // MARK: - NSScrubberDataSource
