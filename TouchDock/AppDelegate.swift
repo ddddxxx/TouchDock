@@ -16,9 +16,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
-        statusItem.menu = statusMenu
         statusItem.button?.image = #imageLiteral(resourceName: "AppStore_16x")
         statusItem.length = 30
+        statusItem.target = self
+        statusItem.action = #selector(clickStatusItem)
         
         if #available(OSX 10.12.2, *) {
             TouchBarController.shared.setupControlStripPresence()
@@ -27,6 +28,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+    }
+    
+    func clickStatusItem() {
+        if #available(OSX 10.12.2, *) {
+            TouchBarController.shared.updateControlStripPresence()
+        }
+        statusItem.popUpMenu(statusMenu)
     }
     
 }
