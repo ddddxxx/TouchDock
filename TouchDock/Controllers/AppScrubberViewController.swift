@@ -56,8 +56,10 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
 }
 
 private func launchedApplications() -> [NSRunningApplication] {
-    guard let pids = copyPIDArrayInFrontToBackOrder()?.takeRetainedValue() as? [pid_t] else {
-        return []
+    let asns = _LSCopyApplicationArrayInFrontToBackOrder(~0)?.takeRetainedValue()
+    return (0..<CFArrayGetCount(asns)).flatMap { index in
+        let asn = CFArrayGetValueAtIndex(asns, index)
+        guard let pid = pidFromASN(asn)?.takeRetainedValue() else { return nil }
+        return NSRunningApplication(processIdentifier: pid as pid_t)
     }
-    return pids.flatMap { NSRunningApplication(processIdentifier: $0) }
 }
