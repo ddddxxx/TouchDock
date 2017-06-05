@@ -1,63 +1,37 @@
 //
 //  RunningApplications.c
-//  TouchDock
 //
-//  Created by 邓翔 on 2017/6/3.
-//  Copyright © 2017年 ddddxxx. All rights reserved.
+//  This file is part of TouchDock
+//  Copyright (C) 2017  Xander Deng
+//
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
 #include "RunningApplications.h"
 
-/*
- * Returns an array of CFDictionaryRef types, each of which contains information about one of the processes.
- * The processes are ordered in front to back, i.e. in the same order they appear when typing command + tab, from left to right.
- * See the ProcessInformationCopyDictionary function documentation for the keys used in the dictionaries.
- * If something goes wrong, then this function returns NULL.
- */
-CFArrayRef copyPIDArrayInFrontToBackOrder(void) {
-    CFArrayRef (*_LSCopyApplicationArrayInFrontToBackOrder)(uint32_t sessionID) = NULL;
-    void       (*_LSASNExtractHighAndLowParts)(void const* asn, UInt32* psnHigh, UInt32* psnLow) = NULL;
-    CFTypeID   (*_LSASNGetTypeID)(void) = NULL;
-    
-    void *lsHandle = dlopen("/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/LaunchServices", RTLD_LAZY);
-    if (!lsHandle) { return NULL; }
-    
-    _LSCopyApplicationArrayInFrontToBackOrder = (CFArrayRef(*)(uint32_t))dlsym(lsHandle, "_LSCopyApplicationArrayInFrontToBackOrder");
-    _LSASNExtractHighAndLowParts = (void(*)(void const*, UInt32*, UInt32*))dlsym(lsHandle, "_LSASNExtractHighAndLowParts");
-    _LSASNGetTypeID = (CFTypeID(*)(void))dlsym(lsHandle, "_LSASNGetTypeID");
-    
-    if (_LSCopyApplicationArrayInFrontToBackOrder == NULL || _LSASNExtractHighAndLowParts == NULL || _LSASNGetTypeID == NULL) { return NULL; }
-    
-    CFMutableArrayRef orderedApplications = CFArrayCreateMutable(kCFAllocatorDefault, 64, &kCFTypeArrayCallBacks);
-    if (!orderedApplications) { return NULL; }
-    
-    CFArrayRef apps = _LSCopyApplicationArrayInFrontToBackOrder(-1);
-    if (!apps) { CFRelease(orderedApplications); return NULL; }
-    
-    CFStringRef pidKey = CFStringCreateWithCString(kCFAllocatorDefault, "pid", kCFStringEncodingUTF8);
-    
-    CFIndex count = CFArrayGetCount(apps);
-    for (CFIndex i = 0; i < count; i++) {
-        ProcessSerialNumber psn = {0, kNoProcess};
-        CFTypeRef asn = CFArrayGetValueAtIndex(apps, i);
-        if (CFGetTypeID(asn) == _LSASNGetTypeID()) {
-            _LSASNExtractHighAndLowParts(asn, &psn.highLongOfPSN, &psn.lowLongOfPSN);
-            CFDictionaryRef processInfo = ProcessInformationCopyDictionary(&psn, kProcessDictionaryIncludeAllInformationMask);
-            if (processInfo) {
-                CFNumberRef pid = CFDictionaryGetValue(processInfo, pidKey);
-                if (pid) {
-                    CFArrayAppendValue(orderedApplications, pid);
-                    CFRelease(pid);
-                }
-                CFRelease(processInfo);
-            }
+CFStringRef kPidKey = CFSTR("pid");
+
+CFNumberRef pidFromASN(void const *asn) {
+    ProcessSerialNumber psn = {0, kNoProcess};
+    if (CFGetTypeID(asn) == _LSASNGetTypeID()) {
+        _LSASNExtractHighAndLowParts(asn, &psn.highLongOfPSN, &psn.lowLongOfPSN);
+        CFDictionaryRef processInfo = ProcessInformationCopyDictionary(&psn, kProcessDictionaryIncludeAllInformationMask);
+        if (processInfo) {
+            CFNumberRef pid = CFDictionaryGetValue(processInfo, kPidKey);
+            CFRelease(processInfo);
+            return pid;
         }
     }
-    CFRelease(apps);
-    
-    CFRelease(pidKey);
-    
-    CFArrayRef result = CFArrayGetCount(orderedApplications) == 0 ? NULL : CFArrayCreateCopy(kCFAllocatorDefault, orderedApplications);
-    CFRelease(orderedApplications);
-    return result;
+    return nil;
 }
