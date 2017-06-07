@@ -19,6 +19,7 @@
 //
 
 import Cocoa
+import Then
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -27,11 +28,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength)
-        statusItem.button?.image = #imageLiteral(resourceName: "StatusBarIcon")
-        statusItem.length = 32
-        statusItem.target = self
-        statusItem.action = #selector(clickStatusItem)
+        statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength).then {
+            $0.button?.image = #imageLiteral(resourceName: "StatusBarIcon")
+            $0.length = 32
+            $0.target = self
+            $0.action = #selector(clickStatusItem)
+        }
         
         if #available(OSX 10.12.2, *) {
             TouchBarController.shared.setupControlStripPresence()

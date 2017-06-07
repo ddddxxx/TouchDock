@@ -27,15 +27,17 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     
     override init(identifier: NSTouchBarItemIdentifier) {
         super.init(identifier: identifier)
-        let scrubber = NSScrubber()
-        scrubber.delegate = self
-        scrubber.dataSource = self
-        scrubber.mode = .fixed
-        let layout = NSScrubberFlowLayout()
-        layout.itemSize = NSSize(width: 65, height: 30)
-        scrubber.scrubberLayout = layout
-        scrubber.selectionBackgroundStyle = .roundedBackground
-        view = scrubber
+        
+        view = NSScrubber().then {
+            $0.delegate = self
+            $0.dataSource = self
+            $0.mode = .fixed
+            let layout = NSScrubberFlowLayout().then {
+                $0.itemSize = NSSize(width: 65, height: 30)
+            }
+            $0.scrubberLayout = layout
+            $0.selectionBackgroundStyle = .roundedBackground
+        }
         
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidTerminateApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidActivateApplication, object: nil)
@@ -47,7 +49,8 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateRunningApplication() {
+    @objc
+    private func updateRunningApplication() {
         runningApplications = launchedApplications()
         (view as? NSScrubber)?.reloadData()
         (view as? NSScrubber)?.selectedIndex = 0
@@ -60,12 +63,12 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
-        let view = NSScrubberImageItemView()
-        if let icon = runningApplications[index].icon {
-            view.image = icon
-            view.imageView.imageScaling  = .scaleProportionallyDown
+        return NSScrubberImageItemView().then { view in
+            view.imageView.imageScaling = .scaleProportionallyDown
+            runningApplications[index].icon?.do {
+                view.image = $0
+            }
         }
-        return view
     }
     
     public func didFinishInteracting(with scrubber: NSScrubber) {
