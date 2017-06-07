@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BB19EDC01EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */; };
+		BB19EDC21EE7A82700CD05EB /* Then.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB19EDC11EE7A82700CD05EB /* Then.framework */; };
+		BB19EDC31EE7A82700CD05EB /* Then.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BB19EDC11EE7A82700CD05EB /* Then.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BB385D2B1EE3007500723427 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB385D2A1EE3007500723427 /* CoreServices.framework */; };
 		BB385D301EE30C8200723427 /* RunningApplications.c in Sources */ = {isa = PBXBuildFile; fileRef = BB385D2E1EE30C8200723427 /* RunningApplications.c */; };
 		BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE501EE27A4300445D54 /* AppDelegate.swift */; };
@@ -17,8 +19,23 @@
 		BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE681EE27BE300445D54 /* TouchBarController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		BB19EDC41EE7A82700CD05EB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BB19EDC31EE7A82700CD05EB /* Then.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppScrubberTouchBarItem.swift; sourceTree = "<group>"; };
+		BB19EDC11EE7A82700CD05EB /* Then.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Then.framework; path = Carthage/Build/Mac/Then.framework; sourceTree = "<group>"; };
 		BB385D2A1EE3007500723427 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		BB385D2E1EE30C8200723427 /* RunningApplications.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RunningApplications.c; path = CBridge/RunningApplications.c; sourceTree = "<group>"; };
 		BB385D2F1EE30C8200723427 /* RunningApplications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RunningApplications.h; path = CBridge/RunningApplications.h; sourceTree = "<group>"; };
@@ -38,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB19EDC21EE7A82700CD05EB /* Then.framework in Frameworks */,
 				BB385D2B1EE3007500723427 /* CoreServices.framework in Frameworks */,
 				BBE1CE621EE27B1A00445D54 /* DFRFoundation.framework in Frameworks */,
 			);
@@ -101,6 +119,7 @@
 			children = (
 				BB385D2A1EE3007500723427 /* CoreServices.framework */,
 				BBE1CE611EE27B1A00445D54 /* DFRFoundation.framework */,
+				BB19EDC11EE7A82700CD05EB /* Then.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -115,6 +134,7 @@
 				BBE1CE491EE27A4300445D54 /* Sources */,
 				BBE1CE4A1EE27A4300445D54 /* Frameworks */,
 				BBE1CE4B1EE27A4300445D54 /* Resources */,
+				BB19EDC41EE7A82700CD05EB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -299,6 +319,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TouchDock/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "TouchDock/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -319,6 +340,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/TouchDock/Frameworks",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "TouchDock/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
