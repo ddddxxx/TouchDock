@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BB19EDC01EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */; };
 		BB385D2B1EE3007500723427 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB385D2A1EE3007500723427 /* CoreServices.framework */; };
 		BB385D301EE30C8200723427 /* RunningApplications.c in Sources */ = {isa = PBXBuildFile; fileRef = BB385D2E1EE30C8200723427 /* RunningApplications.c */; };
 		BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE501EE27A4300445D54 /* AppDelegate.swift */; };
@@ -14,10 +15,10 @@
 		BBE1CE581EE27A4400445D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE561EE27A4400445D54 /* Main.storyboard */; };
 		BBE1CE621EE27B1A00445D54 /* DFRFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE1CE611EE27B1A00445D54 /* DFRFoundation.framework */; };
 		BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE681EE27BE300445D54 /* TouchBarController.swift */; };
-		BBE1CE6B1EE27F2800445D54 /* AppScrubberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE6A1EE27F2800445D54 /* AppScrubberViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppScrubberTouchBarItem.swift; sourceTree = "<group>"; };
 		BB385D2A1EE3007500723427 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		BB385D2E1EE30C8200723427 /* RunningApplications.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RunningApplications.c; path = CBridge/RunningApplications.c; sourceTree = "<group>"; };
 		BB385D2F1EE30C8200723427 /* RunningApplications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RunningApplications.h; path = CBridge/RunningApplications.h; sourceTree = "<group>"; };
@@ -30,7 +31,6 @@
 		BBE1CE631EE27B2800445D54 /* TouchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchBar.h; path = CBridge/TouchBar.h; sourceTree = "<group>"; };
 		BBE1CE641EE27B3800445D54 /* TouchDock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "TouchDock-Bridging-Header.h"; path = "Supporting Files/TouchDock-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBE1CE681EE27BE300445D54 /* TouchBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarController.swift; sourceTree = "<group>"; };
-		BBE1CE6A1EE27F2800445D54 /* AppScrubberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppScrubberViewController.swift; path = Controllers/AppScrubberViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +78,8 @@
 			children = (
 				BBE1CE501EE27A4300445D54 /* AppDelegate.swift */,
 				BBE1CE681EE27BE300445D54 /* TouchBarController.swift */,
+				BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */,
 				BBE1CE561EE27A4400445D54 /* Main.storyboard */,
-				BBE1CE6C1EE27F2C00445D54 /* Controllers */,
 				BB6D867A1EE3A99C00FC9A10 /* CBridge */,
 				BBE1CE5F1EE27AFB00445D54 /* Supporting Files */,
 			);
@@ -103,14 +103,6 @@
 				BBE1CE611EE27B1A00445D54 /* DFRFoundation.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BBE1CE6C1EE27F2C00445D54 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				BBE1CE6A1EE27F2800445D54 /* AppScrubberViewController.swift */,
-			);
-			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,10 +177,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB19EDC01EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift in Sources */,
 				BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */,
 				BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */,
 				BB385D301EE30C8200723427 /* RunningApplications.c in Sources */,
-				BBE1CE6B1EE27F2800445D54 /* AppScrubberViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

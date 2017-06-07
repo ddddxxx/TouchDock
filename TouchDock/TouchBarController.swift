@@ -67,9 +67,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case NSTouchBarItemIdentifier.appScrubber:
-            let touchBarItem = NSCustomTouchBarItem(identifier: identifier)
-            touchBarItem.viewController = (NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "AppScrubberViewController") as! AppScrubberViewController)
-            return touchBarItem
+            return AppScrubberTouchBarItem(identifier: identifier)
         default:
             return nil
         }

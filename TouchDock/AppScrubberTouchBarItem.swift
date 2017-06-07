@@ -1,5 +1,5 @@
 //
-//  AppScrubberViewController.swift
+//  AppScrubberTouchBarItem.swift
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng
@@ -21,15 +21,21 @@
 import Cocoa
 
 @available(OSX 10.12.2, *)
-class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubberDataSource {
-    
-    @IBOutlet var scrubber: NSScrubber!
+class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource {
     
     var runningApplications: [NSRunningApplication] = []
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(identifier: NSTouchBarItemIdentifier) {
+        super.init(identifier: identifier)
+        let scrubber = NSScrubber()
+        scrubber.delegate = self
+        scrubber.dataSource = self
+        scrubber.mode = .fixed
+        let layout = NSScrubberFlowLayout()
+        layout.itemSize = NSSize(width: 65, height: 30)
+        scrubber.scrubberLayout = layout
         scrubber.selectionBackgroundStyle = .roundedBackground
+        view = scrubber
         
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidTerminateApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidActivateApplication, object: nil)
@@ -37,10 +43,14 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
         updateRunningApplication()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func updateRunningApplication() {
         runningApplications = launchedApplications()
-        scrubber.reloadData()
-        scrubber.selectedIndex = 0
+        (view as? NSScrubber)?.reloadData()
+        (view as? NSScrubber)?.selectedIndex = 0
     }
     
     // MARK: - NSScrubberDataSource
