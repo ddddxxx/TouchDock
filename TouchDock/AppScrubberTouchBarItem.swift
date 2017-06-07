@@ -1,5 +1,5 @@
 //
-//  AppScrubberViewController.swift
+//  AppScrubberTouchBarItem.swift
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng
@@ -21,15 +21,23 @@
 import Cocoa
 
 @available(OSX 10.12.2, *)
-class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubberDataSource {
-    
-    @IBOutlet var scrubber: NSScrubber!
+class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource {
     
     var runningApplications: [NSRunningApplication] = []
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        scrubber.selectionBackgroundStyle = .roundedBackground
+    override init(identifier: NSTouchBarItemIdentifier) {
+        super.init(identifier: identifier)
+        
+        view = NSScrubber().then {
+            $0.delegate = self
+            $0.dataSource = self
+            $0.mode = .fixed
+            let layout = NSScrubberFlowLayout().then {
+                $0.itemSize = NSSize(width: 65, height: 30)
+            }
+            $0.scrubberLayout = layout
+            $0.selectionBackgroundStyle = .roundedBackground
+        }
         
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidTerminateApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidActivateApplication, object: nil)
@@ -37,10 +45,15 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
         updateRunningApplication()
     }
     
-    func updateRunningApplication() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc
+    private func updateRunningApplication() {
         runningApplications = launchedApplications()
-        scrubber.reloadData()
-        scrubber.selectedIndex = 0
+        (view as? NSScrubber)?.reloadData()
+        (view as? NSScrubber)?.selectedIndex = 0
     }
     
     // MARK: - NSScrubberDataSource
@@ -50,12 +63,12 @@ class AppScrubberViewController: NSViewController, NSScrubberDelegate, NSScrubbe
     }
     
     public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
-        let view = NSScrubberImageItemView()
-        if let icon = runningApplications[index].icon {
-            view.image = icon
-            view.imageView.imageScaling  = .scaleProportionallyDown
+        return NSScrubberImageItemView().then { view in
+            view.imageView.imageScaling = .scaleProportionallyDown
+            runningApplications[index].icon?.do {
+                view.image = $0
+            }
         }
-        return view
     }
     
     public func didFinishInteracting(with scrubber: NSScrubber) {

@@ -21,20 +21,27 @@
 #import <AppKit/AppKit.h>
 
 extern void DFRElementSetControlStripPresenceForIdentifier(NSTouchBarItemIdentifier, BOOL);
+
 extern void DFRSystemModalShowsCloseBoxWhenFrontMost(BOOL);
 
 @interface NSTouchBarItem ()
 
 + (void)addSystemTrayItem:(NSTouchBarItem *)item;
 
++ (void)removeSystemTrayItem:(NSTouchBarItem *)item;
+
 @end
 
 @interface NSTouchBar ()
 
+// presentSystemModalFunctionBar:placement:systemTrayItemIdentifier:
+// v40@0:8@16q24@32
++ (void)presentSystemModalFunctionBar:(NSTouchBar *)touchBar placement:(long long)placement systemTrayItemIdentifier:(NSTouchBarItemIdentifier)identifier;
+
 + (void)presentSystemModalFunctionBar:(NSTouchBar *)touchBar systemTrayItemIdentifier:(NSTouchBarItemIdentifier)identifier;
 
-@end
++ (void)dismissSystemModalFunctionBar:(NSTouchBar *)touchBar;
 
-extern CFArrayRef _LSCopyApplicationArrayInFrontToBackOrder(uint32_t sessionID);
-extern void _LSASNExtractHighAndLowParts(void const* asn, UInt32* psnHigh, UInt32* psnLow);
-extern CFTypeID _LSASNGetTypeID(void);
++ (void)minimizeSystemModalFunctionBar:(NSTouchBar *)touchBar;
+
+@end

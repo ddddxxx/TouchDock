@@ -31,12 +31,20 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         super.init()
         touchBar.delegate = self
         touchBar.defaultItemIdentifiers = [.appScrubber]
+        
+        NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
+            if event.modifierFlags.contains(.command) {
+                self.presentTouchBar()
+            } else {
+                self.dismissTouchBar()
+            }
+        }
     }
     
     func setupControlStripPresence() {
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
         let item = NSCustomTouchBarItem(identifier: .systemTrayItem)
-        item.view = NSButton(image: #imageLiteral(resourceName: "TouchBarIcon"), target: self, action: #selector(expand))
+        item.view = NSButton(image: #imageLiteral(resourceName: "TouchBarIcon"), target: self, action: #selector(presentTouchBar))
         NSTouchBarItem.addSystemTrayItem(item)
         DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
     }
@@ -45,8 +53,13 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
     }
     
-    func expand() {
+    @objc
+    private func presentTouchBar() {
         NSTouchBar.presentSystemModalFunctionBar(touchBar, systemTrayItemIdentifier: .systemTrayItem)
+    }
+    
+    private func dismissTouchBar() {
+        NSTouchBar.minimizeSystemModalFunctionBar(touchBar)
     }
     
     // MARK: - NSTouchBarDelegate
@@ -54,9 +67,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case NSTouchBarItemIdentifier.appScrubber:
-            let touchBarItem = NSCustomTouchBarItem(identifier: identifier)
-            touchBarItem.viewController = (NSStoryboard(name: "Main", bundle: nil).instantiateController(withIdentifier: "AppScrubberViewController") as! AppScrubberViewController)
-            return touchBarItem
+            return AppScrubberTouchBarItem(identifier: identifier)
         default:
             return nil
         }
