@@ -20,6 +20,8 @@
 
 import Cocoa
 
+let scrubberApplicationsItemReuseIdentifier = "ScrubberApplicationsItemReuseIdentifier"
+
 @available(OSX 10.12.2, *)
 class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource {
     
@@ -41,6 +43,8 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
             $0.selectionBackgroundStyle = .roundedBackground
         }
         view = scrubber
+        
+        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: "scrubberApplicationsItemReuseIdentifier")
         
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidTerminateApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidActivateApplication, object: nil)
@@ -66,12 +70,12 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
-        return NSScrubberImageItemView().then { view in
-            view.imageView.imageScaling = .scaleProportionallyDown
-            runningApplications[index].icon?.do {
-                view.image = $0
-            }
+        let item = scrubber.makeItem(withIdentifier: scrubberApplicationsItemReuseIdentifier, owner: self) as? NSScrubberImageItemView ?? NSScrubberImageItemView()
+        item.imageView.imageScaling = .scaleProportionallyDown
+        if let icon = runningApplications[index].icon {
+            item.image = icon
         }
+        return item
     }
     
     public func didFinishInteracting(with scrubber: NSScrubber) {
