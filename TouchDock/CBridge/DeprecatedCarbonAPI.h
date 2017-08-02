@@ -1,5 +1,5 @@
 //
-//  RunningApplications.c
+//  DeprecatedCarbonAPI.h
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng
@@ -18,20 +18,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "RunningApplications.h"
+#import <Carbon/Carbon.h>
 
-CFStringRef kPidKey = CFSTR("pid");
+extern CFArrayRef _LSCopyApplicationArrayInFrontToBackOrder(uint32_t sessionID);
+extern void _LSASNExtractHighAndLowParts(void const* asn, UInt32* psnHigh, UInt32* psnLow);
+extern CFTypeID _LSASNGetTypeID(void);
 
-CFNumberRef pidFromASN(void const *asn) {
-    ProcessSerialNumber psn = {0, kNoProcess};
-    if (CFGetTypeID(asn) == _LSASNGetTypeID()) {
-        _LSASNExtractHighAndLowParts(asn, &psn.highLongOfPSN, &psn.lowLongOfPSN);
-        CFDictionaryRef processInfo = ProcessInformationCopyDictionary(&psn, kProcessDictionaryIncludeAllInformationMask);
-        if (processInfo) {
-            CFNumberRef pid = CFDictionaryGetValue(processInfo, kPidKey);
-            CFRelease(processInfo);
-            return pid;
-        }
-    }
-    return nil;
-}
+CFNumberRef pidFromASN(void const *asn);

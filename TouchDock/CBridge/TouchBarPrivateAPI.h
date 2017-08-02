@@ -1,5 +1,5 @@
 //
-//  TouchBar.h
+//  TouchBarPrivateAPI.h
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng
@@ -24,7 +24,7 @@ extern void DFRElementSetControlStripPresenceForIdentifier(NSTouchBarItemIdentif
 
 extern void DFRSystemModalShowsCloseBoxWhenFrontMost(BOOL);
 
-@interface NSTouchBarItem ()
+@interface NSTouchBarItem (PrivateMethods)
 
 + (void)addSystemTrayItem:(NSTouchBarItem *)item;
 
@@ -32,7 +32,7 @@ extern void DFRSystemModalShowsCloseBoxWhenFrontMost(BOOL);
 
 @end
 
-@interface NSTouchBar ()
+@interface NSTouchBar (PrivateMethods)
 
 // presentSystemModalFunctionBar:placement:systemTrayItemIdentifier:
 // v40@0:8@16q24@32

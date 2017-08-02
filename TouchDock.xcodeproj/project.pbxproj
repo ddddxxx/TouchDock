@@ -11,7 +11,7 @@
 		BB19EDC21EE7A82700CD05EB /* Then.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB19EDC11EE7A82700CD05EB /* Then.framework */; };
 		BB19EDC31EE7A82700CD05EB /* Then.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BB19EDC11EE7A82700CD05EB /* Then.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BB385D2B1EE3007500723427 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB385D2A1EE3007500723427 /* CoreServices.framework */; };
-		BB385D301EE30C8200723427 /* RunningApplications.c in Sources */ = {isa = PBXBuildFile; fileRef = BB385D2E1EE30C8200723427 /* RunningApplications.c */; };
+		BB385D301EE30C8200723427 /* DeprecatedCarbonAPI.c in Sources */ = {isa = PBXBuildFile; fileRef = BB385D2E1EE30C8200723427 /* DeprecatedCarbonAPI.c */; };
 		BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE501EE27A4300445D54 /* AppDelegate.swift */; };
 		BBE1CE551EE27A4300445D54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE541EE27A4300445D54 /* Assets.xcassets */; };
 		BBE1CE581EE27A4400445D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE561EE27A4400445D54 /* Main.storyboard */; };
@@ -37,15 +37,15 @@
 		BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppScrubberTouchBarItem.swift; sourceTree = "<group>"; };
 		BB19EDC11EE7A82700CD05EB /* Then.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Then.framework; path = Carthage/Build/Mac/Then.framework; sourceTree = "<group>"; };
 		BB385D2A1EE3007500723427 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
-		BB385D2E1EE30C8200723427 /* RunningApplications.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = RunningApplications.c; path = CBridge/RunningApplications.c; sourceTree = "<group>"; };
-		BB385D2F1EE30C8200723427 /* RunningApplications.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RunningApplications.h; path = CBridge/RunningApplications.h; sourceTree = "<group>"; };
+		BB385D2E1EE30C8200723427 /* DeprecatedCarbonAPI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = DeprecatedCarbonAPI.c; path = CBridge/DeprecatedCarbonAPI.c; sourceTree = "<group>"; };
+		BB385D2F1EE30C8200723427 /* DeprecatedCarbonAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeprecatedCarbonAPI.h; path = CBridge/DeprecatedCarbonAPI.h; sourceTree = "<group>"; };
 		BBE1CE4D1EE27A4300445D54 /* TouchDock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchDock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBE1CE501EE27A4300445D54 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBE1CE541EE27A4300445D54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BBE1CE571EE27A4400445D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBE1CE591EE27A4400445D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
 		BBE1CE611EE27B1A00445D54 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = TouchDock/Frameworks/DFRFoundation.framework; sourceTree = "<group>"; };
-		BBE1CE631EE27B2800445D54 /* TouchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchBar.h; path = CBridge/TouchBar.h; sourceTree = "<group>"; };
+		BBE1CE631EE27B2800445D54 /* TouchBarPrivateAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchBarPrivateAPI.h; path = CBridge/TouchBarPrivateAPI.h; sourceTree = "<group>"; };
 		BBE1CE641EE27B3800445D54 /* TouchDock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "TouchDock-Bridging-Header.h"; path = "Supporting Files/TouchDock-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBE1CE681EE27BE300445D54 /* TouchBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -67,9 +67,9 @@
 		BB6D867A1EE3A99C00FC9A10 /* CBridge */ = {
 			isa = PBXGroup;
 			children = (
-				BBE1CE631EE27B2800445D54 /* TouchBar.h */,
-				BB385D2F1EE30C8200723427 /* RunningApplications.h */,
-				BB385D2E1EE30C8200723427 /* RunningApplications.c */,
+				BBE1CE631EE27B2800445D54 /* TouchBarPrivateAPI.h */,
+				BB385D2F1EE30C8200723427 /* DeprecatedCarbonAPI.h */,
+				BB385D2E1EE30C8200723427 /* DeprecatedCarbonAPI.c */,
 			);
 			name = CBridge;
 			sourceTree = "<group>";
@@ -217,7 +217,7 @@
 				BB19EDC01EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift in Sources */,
 				BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */,
 				BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */,
-				BB385D301EE30C8200723427 /* RunningApplications.c in Sources */,
+				BB385D301EE30C8200723427 /* DeprecatedCarbonAPI.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
