@@ -19,7 +19,6 @@
 //
 
 #import <Carbon/Carbon.h>
-#import <dlfcn.h>
 
 extern CFArrayRef _LSCopyApplicationArrayInFrontToBackOrder(uint32_t sessionID);
 extern void _LSASNExtractHighAndLowParts(void const* asn, UInt32* psnHigh, UInt32* psnLow);

@@ -20,6 +20,9 @@
 
 #include "RunningApplications.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 CFStringRef kPidKey = CFSTR("pid");
 
 CFNumberRef pidFromASN(void const *asn) {
@@ -35,3 +38,5 @@ CFNumberRef pidFromASN(void const *asn) {
     }
     return nil;
 }
+
+#pragma GCC diagnostic pop
