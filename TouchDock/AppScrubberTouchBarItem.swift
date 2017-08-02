@@ -23,12 +23,14 @@ import Cocoa
 @available(OSX 10.12.2, *)
 class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource {
     
+    var scrubber: NSScrubber!
+    
     var runningApplications: [NSRunningApplication] = []
     
     override init(identifier: NSTouchBarItemIdentifier) {
         super.init(identifier: identifier)
         
-        view = NSScrubber().then {
+        scrubber = NSScrubber().then {
             $0.delegate = self
             $0.dataSource = self
             $0.mode = .fixed
@@ -38,6 +40,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
             $0.scrubberLayout = layout
             $0.selectionBackgroundStyle = .roundedBackground
         }
+        view = scrubber
         
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidTerminateApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidActivateApplication, object: nil)
@@ -52,8 +55,8 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     @objc
     private func updateRunningApplication() {
         runningApplications = launchedApplications()
-        (view as? NSScrubber)?.reloadData()
-        (view as? NSScrubber)?.selectedIndex = 0
+        scrubber.reloadData()
+        scrubber.selectedIndex = 0
     }
     
     // MARK: - NSScrubberDataSource
