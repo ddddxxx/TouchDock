@@ -87,11 +87,39 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     
 }
 
+// MARK: - Applications
+
 private func launchedApplications() -> [NSRunningApplication] {
     let asns = _LSCopyApplicationArrayInFrontToBackOrder(~0)?.takeRetainedValue()
     return (0..<CFArrayGetCount(asns)).flatMap { index in
         let asn = CFArrayGetValueAtIndex(asns, index)
         guard let pid = pidFromASN(asn)?.takeRetainedValue() else { return nil }
         return NSRunningApplication(processIdentifier: pid as pid_t)
+    }
+}
+
+private func dockPersistentApplications() -> [NSRunningApplication] {
+    let apps = NSWorkspace.shared().runningApplications.filter {
+        $0.activationPolicy == .regular
+    }
+    
+    guard let dockDefaults = UserDefaults(suiteName: "com.apple.dock"),
+        let persistentApps = dockDefaults.array(forKey: "persistent-apps") as [AnyObject]?,
+        let bundleIDs = persistentApps.flatMap({ $0.value(forKeyPath: "tile-data.bundle-identifier") }) as? [String] else {
+            return apps
+    }
+    
+    return apps.sorted { (lhs, rhs) in
+        if lhs.bundleIdentifier == "com.apple.finder" {
+            return true
+        }
+        switch ((bundleIDs.index(of: lhs.bundleIdentifier!)), bundleIDs.index(of: rhs.bundleIdentifier!)) {
+        case (nil, _):
+            return false;
+        case (_?, nil):
+            return true
+        case let (i1?, i2?):
+            return i1 < i2;
+        }
     }
 }
