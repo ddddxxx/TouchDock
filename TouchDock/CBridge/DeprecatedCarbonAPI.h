@@ -1,5 +1,5 @@
 //
-//  LaunchApplications.h
+//  DeprecatedCarbonAPI.h
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng

@@ -1,5 +1,5 @@
 //
-//  RunningApplications.c
+//  DeprecatedCarbonAPI.c
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng
@@ -18,7 +18,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "RunningApplications.h"
+#include "DeprecatedCarbonAPI.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"

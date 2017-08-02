@@ -1,2 +1,2 @@
-#import "TouchBar.h"
-#import "RunningApplications.h"
+#import "TouchBarPrivateAPI.h"
+#import "DeprecatedCarbonAPI.h"
