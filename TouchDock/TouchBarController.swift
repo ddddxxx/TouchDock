@@ -25,7 +25,8 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     
     static let shared = TouchBarController()
     
-    var touchBar = NSTouchBar()
+    let touchBar = NSTouchBar()
+    var appScrubber: AppScrubberTouchBarItem?
     
     private override init() {
         super.init()
@@ -55,6 +56,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     
     @objc
     private func presentTouchBar() {
+        appScrubber?.updateRunningApplication(animated: false)
         NSTouchBar.presentSystemModalFunctionBar(touchBar, systemTrayItemIdentifier: .systemTrayItem)
     }
     
@@ -67,7 +69,8 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
         case NSTouchBarItemIdentifier.appScrubber:
-            return AppScrubberTouchBarItem(identifier: identifier)
+            appScrubber = AppScrubberTouchBarItem(identifier: identifier)
+            return appScrubber
         default:
             return nil
         }

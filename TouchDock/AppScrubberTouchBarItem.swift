@@ -46,20 +46,47 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         
         scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: "scrubberApplicationsItemReuseIdentifier")
         
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidTerminateApplication, object: nil)
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(updateRunningApplication), name: .NSWorkspaceDidActivateApplication, object: nil)
+        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidLaunchApplication, object: nil)
+        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidTerminateApplication, object: nil)
+        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidActivateApplication, object: nil)
         
-        updateRunningApplication()
+        updateRunningApplication(animated: false)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc
-    private func updateRunningApplication() {
-        runningApplications = launchedApplications()
-        scrubber.reloadData()
+    func activeApplicationChanged(n: Notification) {
+        updateRunningApplication(animated: true)
+    }
+    
+    func updateRunningApplication(animated: Bool) {
+        let newApplications = launchedApplications()
+        if animated {
+            scrubber.performSequentialBatchUpdates {
+                for (index, app) in newApplications.enumerated() {
+                    while runningApplications[safe:index].map(newApplications.contains) == false {
+                        scrubber.removeItems(at: [index])
+                        runningApplications.remove(at: index)
+                    }
+                    if let oldIndex = runningApplications.index(of: app) {
+                        guard oldIndex != index else {
+                            return
+                        }
+                        scrubber.moveItem(at: oldIndex, to: index)
+                        runningApplications.move(at: oldIndex, to: index)
+                    } else {
+                        scrubber.insertItems(at: [index])
+                        runningApplications.insert(app, at: index)
+                    }
+                }
+                assert(runningApplications == newApplications)
+            }
+        } else {
+            runningApplications = newApplications
+            scrubber.reloadData()
+        }
         scrubber.selectedIndex = 0
     }
     
@@ -85,6 +112,27 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         runningApplications[scrubber.selectedIndex].activate(options: .activateIgnoringOtherApps)
     }
     
+}
+
+extension RangeReplaceableCollection {
+    
+    mutating func move(at oldIndex: Self.Index, to newIndex: Self.Index) {
+        guard oldIndex != newIndex else {
+            return
+        }
+        let item = remove(at: oldIndex)
+        insert(item, at: newIndex)
+    }
+}
+
+extension Collection {
+    
+    subscript (safe index: Self.Index) -> Self.Iterator.Element? {
+        guard index < endIndex else {
+            return nil
+        }
+        return self[index]
+    }
 }
 
 // MARK: - Applications
