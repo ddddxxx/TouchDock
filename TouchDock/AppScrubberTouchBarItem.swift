@@ -44,7 +44,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         }
         view = scrubber
         
-        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: "scrubberApplicationsItemReuseIdentifier")
+        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: scrubberApplicationsItemReuseIdentifier)
         
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidLaunchApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidTerminateApplication, object: nil)
