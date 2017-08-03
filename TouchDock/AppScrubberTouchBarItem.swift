@@ -49,6 +49,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidLaunchApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidTerminateApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidActivateApplication, object: nil)
+        UserDefaults.standard.addObserver(self, forKeyPath: "AppScrubberOrderDock", context: nil)
         
         updateRunningApplication(animated: false)
     }
@@ -61,8 +62,17 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         updateRunningApplication(animated: true)
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        updateRunningApplication(animated: false)
+    }
+    
     func updateRunningApplication(animated: Bool) {
-        let newApplications = launchedApplications()
+        let isDockOrder = UserDefaults.standard.bool(forKey: "AppScrubberOrderDock")
+        let newApplications = isDockOrder ? dockPersistentApplications() : launchedApplications()
+        let frontmost = NSWorkspace.shared().frontmostApplication
+        let index = newApplications.index {
+            $0.processIdentifier == frontmost?.processIdentifier
+        }
         if animated {
             scrubber.performSequentialBatchUpdates {
                 for (index, app) in newApplications.enumerated() {
@@ -87,7 +97,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
             runningApplications = newApplications
             scrubber.reloadData()
         }
-        scrubber.selectedIndex = 0
+        scrubber.selectedIndex = index ?? 0
     }
     
     // MARK: - NSScrubberDataSource

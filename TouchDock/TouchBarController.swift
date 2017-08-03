@@ -31,7 +31,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     private override init() {
         super.init()
         touchBar.delegate = self
-        touchBar.defaultItemIdentifiers = [.appScrubber]
+        touchBar.defaultItemIdentifiers = [.appsOrder, .appScrubber]
         
         NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
             if event.modifierFlags.contains(.command) {
@@ -45,7 +45,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     func setupControlStripPresence() {
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
         let item = NSCustomTouchBarItem(identifier: .systemTrayItem)
-        item.view = NSButton(image: #imageLiteral(resourceName: "TouchBarIcon"), target: self, action: #selector(presentTouchBar))
+        item.view = NSButton(image: #imageLiteral(resourceName: "TouchBar.Apps"), target: self, action: #selector(presentTouchBar))
         NSTouchBarItem.addSystemTrayItem(item)
         DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
     }
@@ -68,6 +68,15 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
         switch identifier {
+        case NSTouchBarItemIdentifier.appsOrder:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Dock"), target: nil, action: nil).then {
+                $0.setButtonType(.toggle)
+                $0.bezelStyle = .rounded
+                $0.alternateImage = #imageLiteral(resourceName: "TouchBar.Recent")
+                $0.bind(NSValueBinding, to: UserDefaults.standard, withKeyPath: "AppScrubberOrderDock")
+            }
+            return item
         case NSTouchBarItemIdentifier.appScrubber:
             appScrubber = AppScrubberTouchBarItem(identifier: identifier)
             return appScrubber
@@ -79,6 +88,9 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
 }
 
 extension NSTouchBarItemIdentifier {
+    
+    static let appsOrder = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.appsOrder")
     static let appScrubber = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.appScrubber")
+    
     static let systemTrayItem = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
 }
