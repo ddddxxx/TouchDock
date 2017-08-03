@@ -26,7 +26,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     static let shared = TouchBarController()
     
     let touchBar = NSTouchBar()
-    var appScrubber: AppScrubberTouchBarItem?
+    weak var appScrubber: AppScrubberTouchBarItem?
     
     private override init() {
         super.init()
