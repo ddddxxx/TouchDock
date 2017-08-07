@@ -44,11 +44,12 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         }
         view = scrubber
         
-        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: "scrubberApplicationsItemReuseIdentifier")
+        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: scrubberApplicationsItemReuseIdentifier)
         
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidLaunchApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidTerminateApplication, object: nil)
         NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidActivateApplication, object: nil)
+        UserDefaults.standard.addObserver(self, forKeyPath: "AppScrubberOrderDock", context: nil)
         
         updateRunningApplication(animated: false)
     }
@@ -61,14 +62,27 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         updateRunningApplication(animated: true)
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        updateRunningApplication(animated: false)
+    }
+    
     func updateRunningApplication(animated: Bool) {
-        let newApplications = launchedApplications()
+        let isDockOrder = UserDefaults.standard.bool(forKey: "AppScrubberOrderDock")
+        let newApplications = (isDockOrder ? dockPersistentApplications() : launchedApplications()).filter {
+            !$0.isTerminated && $0.bundleIdentifier != nil
+        }
+        let frontmost = NSWorkspace.shared().frontmostApplication
+        let index = newApplications.index {
+            $0.processIdentifier == frontmost?.processIdentifier
+        }
         if animated {
             scrubber.performSequentialBatchUpdates {
+                print("-----update-----")
                 for (index, app) in newApplications.enumerated() {
                     while runningApplications[safe:index].map(newApplications.contains) == false {
                         scrubber.removeItems(at: [index])
-                        runningApplications.remove(at: index)
+                        let r = runningApplications.remove(at: index)
+                        print("remove \(r.localizedName!) at \(index)")
                     }
                     if let oldIndex = runningApplications.index(of: app) {
                         guard oldIndex != index else {
@@ -76,9 +90,11 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
                         }
                         scrubber.moveItem(at: oldIndex, to: index)
                         runningApplications.move(at: oldIndex, to: index)
+                        print("move \(app.localizedName!) at \(oldIndex) to \(index)")
                     } else {
                         scrubber.insertItems(at: [index])
                         runningApplications.insert(app, at: index)
+                        print("insert \(app.localizedName!) to \(index)")
                     }
                 }
                 assert(runningApplications == newApplications)
@@ -87,7 +103,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
             runningApplications = newApplications
             scrubber.reloadData()
         }
-        scrubber.selectedIndex = 0
+        scrubber.selectedIndex = index ?? 0
     }
     
     // MARK: - NSScrubberDataSource
