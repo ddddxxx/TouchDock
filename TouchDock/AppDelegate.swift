@@ -19,7 +19,6 @@
 //
 
 import Cocoa
-import Then
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
