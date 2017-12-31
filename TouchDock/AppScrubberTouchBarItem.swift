@@ -22,7 +22,6 @@ import Cocoa
 
 let scrubberApplicationsItemReuseIdentifier = "ScrubberApplicationsItemReuseIdentifier"
 
-@available(OSX 10.12.2, *)
 class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource {
     
     var scrubber: NSScrubber!

@@ -20,7 +20,6 @@
 
 import Cocoa
 
-@available(OSX 10.12.2, *)
 class TouchBarController: NSObject, NSTouchBarDelegate {
     
     static let shared = TouchBarController()
@@ -54,8 +53,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
     }
     
-    @objc
-    private func presentTouchBar() {
+    @objc private func presentTouchBar() {
         appScrubber?.updateRunningApplication(animated: false)
         NSTouchBar.presentSystemModalFunctionBar(touchBar, systemTrayItemIdentifier: .systemTrayItem)
     }

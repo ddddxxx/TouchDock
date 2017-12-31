@@ -34,9 +34,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             $0.action = #selector(clickStatusItem)
         }
         
-        if #available(OSX 10.12.2, *) {
-            TouchBarController.shared.setupControlStripPresence()
-        }
+        TouchBarController.shared.setupControlStripPresence()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -44,9 +42,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func clickStatusItem() {
-        if #available(OSX 10.12.2, *) {
-            TouchBarController.shared.updateControlStripPresence()
-        }
+        TouchBarController.shared.updateControlStripPresence()
         statusItem.popUpMenu(statusMenu)
     }
     
