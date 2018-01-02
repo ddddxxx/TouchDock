@@ -28,7 +28,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     
     var runningApplications: [NSRunningApplication] = []
     
-    override init(identifier: NSTouchBarItemIdentifier) {
+    override init(identifier: NSTouchBarItem.Identifier) {
         super.init(identifier: identifier)
         
         scrubber = NSScrubber().then {
@@ -43,11 +43,11 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         }
         view = scrubber
         
-        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: scrubberApplicationsItemReuseIdentifier)
+        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: .init(scrubberApplicationsItemReuseIdentifier))
         
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidLaunchApplication, object: nil)
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidTerminateApplication, object: nil)
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidActivateApplication, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
+        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didActivateApplicationNotification, object: nil)
         UserDefaults.standard.addObserver(self, forKeyPath: "AppScrubberOrderDock", context: nil)
         
         updateRunningApplication(animated: false)
@@ -57,7 +57,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         fatalError("init(coder:) has not been implemented")
     }
     
-    func activeApplicationChanged(n: Notification) {
+    @objc func activeApplicationChanged(n: Notification) {
         updateRunningApplication(animated: true)
     }
     
@@ -70,7 +70,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         let newApplications = (isDockOrder ? dockPersistentApplications() : launchedApplications()).filter {
             !$0.isTerminated && $0.bundleIdentifier != nil
         }
-        let frontmost = NSWorkspace.shared().frontmostApplication
+        let frontmost = NSWorkspace.shared.frontmostApplication
         let index = newApplications.index {
             $0.processIdentifier == frontmost?.processIdentifier
         }
@@ -112,7 +112,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
-        let item = scrubber.makeItem(withIdentifier: scrubberApplicationsItemReuseIdentifier, owner: self) as? NSScrubberImageItemView ?? NSScrubberImageItemView()
+        let item = scrubber.makeItem(withIdentifier: .init(scrubberApplicationsItemReuseIdentifier), owner: self) as? NSScrubberImageItemView ?? NSScrubberImageItemView()
         item.imageView.imageScaling = .scaleProportionallyDown
         if let icon = runningApplications[index].icon {
             item.image = icon
@@ -157,12 +157,12 @@ private func launchedApplications() -> [NSRunningApplication] {
     return (0..<CFArrayGetCount(asns)).flatMap { index in
         let asn = CFArrayGetValueAtIndex(asns, index)
         guard let pid = pidFromASN(asn)?.takeRetainedValue() else { return nil }
-        return NSRunningApplication(processIdentifier: pid as pid_t)
+        return NSRunningApplication(processIdentifier: pid as! pid_t)
     }
 }
 
 private func dockPersistentApplications() -> [NSRunningApplication] {
-    let apps = NSWorkspace.shared().runningApplications.filter {
+    let apps = NSWorkspace.shared.runningApplications.filter {
         $0.activationPolicy == .regular
     }
     

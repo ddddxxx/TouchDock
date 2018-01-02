@@ -64,18 +64,18 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     
     // MARK: - NSTouchBarDelegate
     
-    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         switch identifier {
-        case NSTouchBarItemIdentifier.appsOrder:
+        case .appsOrder:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Dock"), target: nil, action: nil).then {
                 $0.setButtonType(.toggle)
                 $0.bezelStyle = .rounded
                 $0.alternateImage = #imageLiteral(resourceName: "TouchBar.Recent")
-                $0.bind(NSValueBinding, to: UserDefaults.standard, withKeyPath: "AppScrubberOrderDock")
+                $0.bind(.value, to: UserDefaults.standard, withKeyPath: "AppScrubberOrderDock")
             }
             return item
-        case NSTouchBarItemIdentifier.appScrubber:
+        case .appScrubber:
             appScrubber = AppScrubberTouchBarItem(identifier: identifier)
             return appScrubber
         default:
@@ -85,10 +85,10 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     
 }
 
-extension NSTouchBarItemIdentifier {
+extension NSTouchBarItem.Identifier {
     
-    static let appsOrder = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.appsOrder")
-    static let appScrubber = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.appScrubber")
+    static let appsOrder = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.appsOrder")
+    static let appScrubber = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.appScrubber")
     
-    static let systemTrayItem = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
+    static let systemTrayItem = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
 }

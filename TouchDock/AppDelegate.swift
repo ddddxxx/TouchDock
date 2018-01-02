@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusItem = NSStatusBar.system().statusItem(withLength: NSVariableStatusItemLength).then {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength).then {
             $0.button?.image = #imageLiteral(resourceName: "StatusBar.Icon")
             $0.length = 32
             $0.target = self
@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
     
-    func clickStatusItem() {
+    @objc func clickStatusItem() {
         TouchBarController.shared.updateControlStripPresence()
         statusItem.popUpMenu(statusMenu)
     }
