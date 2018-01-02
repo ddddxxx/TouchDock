@@ -20,6 +20,9 @@
 
 import Cocoa
 
+let defaults = UserDefaults.standard
+let workspaceNC = NSWorkspace.shared.notificationCenter
+
 extension NSUserInterfaceItemIdentifier {
     
     static let scrubberApplicationsItem = NSUserInterfaceItemIdentifier("ScrubberApplicationsItemReuseIdentifier")
@@ -32,3 +35,5 @@ extension NSTouchBarItem.Identifier {
     
     static let systemTrayItem = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
 }
+
+let appScrubberOrderDock = "AppScrubberOrderDock"

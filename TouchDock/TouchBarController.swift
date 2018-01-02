@@ -72,7 +72,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
                 $0.setButtonType(.toggle)
                 $0.bezelStyle = .rounded
                 $0.alternateImage = #imageLiteral(resourceName: "TouchBar.Recent")
-                $0.bind(.value, to: UserDefaults.standard, withKeyPath: "AppScrubberOrderDock")
+                $0.bind(.value, to: defaults, withKeyPath: appScrubberOrderDock)
             }
             return item
         case .appScrubber:

@@ -43,10 +43,10 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         
         scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: .scrubberApplicationsItem)
         
-        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
-        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
-        NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didActivateApplicationNotification, object: nil)
-        UserDefaults.standard.addObserver(self, forKeyPath: "AppScrubberOrderDock", context: nil)
+        workspaceNC.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
+        workspaceNC.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
+        workspaceNC.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didActivateApplicationNotification, object: nil)
+        defaults.addObserver(self, forKeyPath: appScrubberOrderDock, context: nil)
         
         updateRunningApplication(animated: false)
     }
@@ -64,7 +64,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     func updateRunningApplication(animated: Bool) {
-        let isDockOrder = UserDefaults.standard.bool(forKey: "AppScrubberOrderDock")
+        let isDockOrder = defaults.bool(forKey: appScrubberOrderDock)
         let newApplications = (isDockOrder ? dockPersistentApplications() : launchedApplications()).filter {
             !$0.isTerminated && $0.bundleIdentifier != nil
         }
