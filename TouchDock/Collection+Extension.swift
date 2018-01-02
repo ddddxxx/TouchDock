@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  Collection+Extension.swift
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng
@@ -18,14 +18,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Cocoa
+import Foundation
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+extension RangeReplaceableCollection {
     
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        TouchBarController.shared.setupControlStripPresence()
+    mutating func move(at oldIndex: Self.Index, to newIndex: Self.Index) {
+        guard oldIndex != newIndex else {
+            return
+        }
+        let item = remove(at: oldIndex)
+        insert(item, at: newIndex)
     }
-    
 }
 
+extension Collection {
+    
+    subscript(safe index: Self.Index) -> Self.Iterator.Element? {
+        guard index < endIndex else {
+            return nil
+        }
+        return self[index]
+    }
+}

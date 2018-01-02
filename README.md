@@ -14,7 +14,7 @@ You can download ZIP from [releases](https://github.com/ddddxxx/TouchDock/releas
 
 ### Requirements
 
-- macOS 10.12+
+- macOS 10.13+
 - MacBook Pro with Touch Bar
 
 ## Screenshot

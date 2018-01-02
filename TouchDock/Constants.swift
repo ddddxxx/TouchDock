@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  Constants.swift
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng
@@ -20,12 +20,21 @@
 
 import Cocoa
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+let defaults = UserDefaults.standard
+let workspaceNC = NSWorkspace.shared.notificationCenter
+
+extension NSUserInterfaceItemIdentifier {
     
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        TouchBarController.shared.setupControlStripPresence()
-    }
-    
+    static let scrubberApplicationsItem = NSUserInterfaceItemIdentifier("ScrubberApplicationsItemReuseIdentifier")
 }
 
+extension NSTouchBarItem.Identifier {
+    
+    static let appsOrder = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.appsOrder")
+    static let appScrubber = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.appScrubber")
+    static let quitApp = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.quitApp")
+    
+    static let systemTrayItem = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
+}
+
+let appScrubberOrderDock = "AppScrubberOrderDock"

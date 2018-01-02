@@ -20,7 +20,6 @@
 
 import Cocoa
 
-@available(OSX 10.12.2, *)
 class TouchBarController: NSObject, NSTouchBarDelegate {
     
     static let shared = TouchBarController()
@@ -31,7 +30,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     private override init() {
         super.init()
         touchBar.delegate = self
-        touchBar.defaultItemIdentifiers = [.appsOrder, .appScrubber]
+        touchBar.defaultItemIdentifiers = [.appsOrder, .appScrubber, .quitApp]
         
         NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
             if event.modifierFlags.contains(.command) {
@@ -54,8 +53,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
     }
     
-    @objc
-    private func presentTouchBar() {
+    @objc private func presentTouchBar() {
         appScrubber?.updateRunningApplication(animated: false)
         NSTouchBar.presentSystemModalFunctionBar(touchBar, systemTrayItemIdentifier: .systemTrayItem)
     }
@@ -66,31 +64,27 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     
     // MARK: - NSTouchBarDelegate
     
-    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItemIdentifier) -> NSTouchBarItem? {
+    func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         switch identifier {
-        case NSTouchBarItemIdentifier.appsOrder:
+        case .appsOrder:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Dock"), target: nil, action: nil).then {
                 $0.setButtonType(.toggle)
                 $0.bezelStyle = .rounded
                 $0.alternateImage = #imageLiteral(resourceName: "TouchBar.Recent")
-                $0.bind(NSValueBinding, to: UserDefaults.standard, withKeyPath: "AppScrubberOrderDock")
+                $0.bind(.value, to: defaults, withKeyPath: appScrubberOrderDock)
             }
             return item
-        case NSTouchBarItemIdentifier.appScrubber:
+        case .appScrubber:
             appScrubber = AppScrubberTouchBarItem(identifier: identifier)
             return appScrubber
+        case .quitApp:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Quit"), target: NSApplication.shared, action: #selector(NSApplication.terminate))
+            return item
         default:
             return nil
         }
     }
     
-}
-
-extension NSTouchBarItemIdentifier {
-    
-    static let appsOrder = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.appsOrder")
-    static let appScrubber = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.appScrubber")
-    
-    static let systemTrayItem = NSTouchBarItemIdentifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
 }

@@ -25,18 +25,21 @@
 
 CFStringRef kPidKey = CFSTR("pid");
 
-CFNumberRef pidFromASN(void const *asn) {
-    ProcessSerialNumber psn = {0, kNoProcess};
+pid_t pidFromASN(void const *asn) {
+    pid_t pid = -1;
+    ProcessSerialNumber psn = {kNoProcess, kNoProcess};
     if (CFGetTypeID(asn) == _LSASNGetTypeID()) {
         _LSASNExtractHighAndLowParts(asn, &psn.highLongOfPSN, &psn.lowLongOfPSN);
         CFDictionaryRef processInfo = ProcessInformationCopyDictionary(&psn, kProcessDictionaryIncludeAllInformationMask);
         if (processInfo) {
-            CFNumberRef pid = CFDictionaryGetValue(processInfo, kPidKey);
+            CFNumberRef pidNumber = CFDictionaryGetValue(processInfo, kPidKey);
+            if (pidNumber) {
+                CFNumberGetValue(pidNumber, kCFNumberSInt32Type, &pid);
+            }
             CFRelease(processInfo);
-            return pid;
         }
     }
-    return nil;
+    return pid;
 }
 
 #pragma GCC diagnostic pop

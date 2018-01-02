@@ -20,16 +20,13 @@
 
 import Cocoa
 
-let scrubberApplicationsItemReuseIdentifier = "ScrubberApplicationsItemReuseIdentifier"
-
-@available(OSX 10.12.2, *)
 class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource {
     
     var scrubber: NSScrubber!
     
     var runningApplications: [NSRunningApplication] = []
     
-    override init(identifier: NSTouchBarItemIdentifier) {
+    override init(identifier: NSTouchBarItem.Identifier) {
         super.init(identifier: identifier)
         
         scrubber = NSScrubber().then {
@@ -44,12 +41,12 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         }
         view = scrubber
         
-        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: scrubberApplicationsItemReuseIdentifier)
+        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: .scrubberApplicationsItem)
         
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidLaunchApplication, object: nil)
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidTerminateApplication, object: nil)
-        NSWorkspace.shared().notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: .NSWorkspaceDidActivateApplication, object: nil)
-        UserDefaults.standard.addObserver(self, forKeyPath: "AppScrubberOrderDock", context: nil)
+        workspaceNC.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
+        workspaceNC.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
+        workspaceNC.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didActivateApplicationNotification, object: nil)
+        defaults.addObserver(self, forKeyPath: appScrubberOrderDock, context: nil)
         
         updateRunningApplication(animated: false)
     }
@@ -58,7 +55,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         fatalError("init(coder:) has not been implemented")
     }
     
-    func activeApplicationChanged(n: Notification) {
+    @objc func activeApplicationChanged(n: Notification) {
         updateRunningApplication(animated: true)
     }
     
@@ -67,11 +64,11 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     func updateRunningApplication(animated: Bool) {
-        let isDockOrder = UserDefaults.standard.bool(forKey: "AppScrubberOrderDock")
+        let isDockOrder = defaults.bool(forKey: appScrubberOrderDock)
         let newApplications = (isDockOrder ? dockPersistentApplications() : launchedApplications()).filter {
             !$0.isTerminated && $0.bundleIdentifier != nil
         }
-        let frontmost = NSWorkspace.shared().frontmostApplication
+        let frontmost = NSWorkspace.shared.frontmostApplication
         let index = newApplications.index {
             $0.processIdentifier == frontmost?.processIdentifier
         }
@@ -113,7 +110,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
-        let item = scrubber.makeItem(withIdentifier: scrubberApplicationsItemReuseIdentifier, owner: self) as? NSScrubberImageItemView ?? NSScrubberImageItemView()
+        let item = scrubber.makeItem(withIdentifier: .scrubberApplicationsItem, owner: self) as? NSScrubberImageItemView ?? NSScrubberImageItemView()
         item.imageView.imageScaling = .scaleProportionallyDown
         if let icon = runningApplications[index].icon {
             item.image = icon
@@ -130,40 +127,19 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     
 }
 
-extension RangeReplaceableCollection {
-    
-    mutating func move(at oldIndex: Self.Index, to newIndex: Self.Index) {
-        guard oldIndex != newIndex else {
-            return
-        }
-        let item = remove(at: oldIndex)
-        insert(item, at: newIndex)
-    }
-}
-
-extension Collection {
-    
-    subscript (safe index: Self.Index) -> Self.Iterator.Element? {
-        guard index < endIndex else {
-            return nil
-        }
-        return self[index]
-    }
-}
-
 // MARK: - Applications
 
 private func launchedApplications() -> [NSRunningApplication] {
     let asns = _LSCopyApplicationArrayInFrontToBackOrder(~0)?.takeRetainedValue()
     return (0..<CFArrayGetCount(asns)).flatMap { index in
         let asn = CFArrayGetValueAtIndex(asns, index)
-        guard let pid = pidFromASN(asn)?.takeRetainedValue() else { return nil }
-        return NSRunningApplication(processIdentifier: pid as pid_t)
+        let pid = pidFromASN(asn)
+        return NSRunningApplication(processIdentifier: pid)
     }
 }
 
 private func dockPersistentApplications() -> [NSRunningApplication] {
-    let apps = NSWorkspace.shared().runningApplications.filter {
+    let apps = NSWorkspace.shared.runningApplications.filter {
         $0.activationPolicy == .regular
     }
     
@@ -176,6 +152,9 @@ private func dockPersistentApplications() -> [NSRunningApplication] {
     return apps.sorted { (lhs, rhs) in
         if lhs.bundleIdentifier == "com.apple.finder" {
             return true
+        }
+        if rhs.bundleIdentifier == "com.apple.finder" {
+            return false
         }
         switch ((bundleIDs.index(of: lhs.bundleIdentifier!)), bundleIDs.index(of: rhs.bundleIdentifier!)) {
         case (nil, _):
