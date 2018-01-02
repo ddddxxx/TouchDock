@@ -20,11 +20,6 @@
 
 import Cocoa
 
-extension NSUserInterfaceItemIdentifier {
-    
-    static let scrubberApplicationsItem = NSUserInterfaceItemIdentifier("ScrubberApplicationsItemReuseIdentifier")
-}
-
 class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource {
     
     var scrubber: NSScrubber!
@@ -130,27 +125,6 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         runningApplications[scrubber.selectedIndex].activate(options: .activateIgnoringOtherApps)
     }
     
-}
-
-extension RangeReplaceableCollection {
-    
-    mutating func move(at oldIndex: Self.Index, to newIndex: Self.Index) {
-        guard oldIndex != newIndex else {
-            return
-        }
-        let item = remove(at: oldIndex)
-        insert(item, at: newIndex)
-    }
-}
-
-extension Collection {
-    
-    subscript(safe index: Self.Index) -> Self.Iterator.Element? {
-        guard index < endIndex else {
-            return nil
-        }
-        return self[index]
-    }
 }
 
 // MARK: - Applications
