@@ -24,4 +24,4 @@ extern CFArrayRef _LSCopyApplicationArrayInFrontToBackOrder(uint32_t sessionID);
 extern void _LSASNExtractHighAndLowParts(void const* asn, UInt32* psnHigh, UInt32* psnLow);
 extern CFTypeID _LSASNGetTypeID(void);
 
-CFNumberRef pidFromASN(void const *asn);
+pid_t pidFromASN(void const *asn);

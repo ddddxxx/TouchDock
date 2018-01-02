@@ -20,7 +20,10 @@
 
 import Cocoa
 
-let scrubberApplicationsItemReuseIdentifier = "ScrubberApplicationsItemReuseIdentifier"
+extension NSUserInterfaceItemIdentifier {
+    
+    static let scrubberApplicationsItem = NSUserInterfaceItemIdentifier("ScrubberApplicationsItemReuseIdentifier")
+}
 
 class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrubberDataSource {
     
@@ -43,7 +46,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         }
         view = scrubber
         
-        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: .init(scrubberApplicationsItemReuseIdentifier))
+        scrubber.register(NSScrubberImageItemView.self, forItemIdentifier: .scrubberApplicationsItem)
         
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
@@ -112,7 +115,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     public func scrubber(_ scrubber: NSScrubber, viewForItemAt index: Int) -> NSScrubberItemView {
-        let item = scrubber.makeItem(withIdentifier: .init(scrubberApplicationsItemReuseIdentifier), owner: self) as? NSScrubberImageItemView ?? NSScrubberImageItemView()
+        let item = scrubber.makeItem(withIdentifier: .scrubberApplicationsItem, owner: self) as? NSScrubberImageItemView ?? NSScrubberImageItemView()
         item.imageView.imageScaling = .scaleProportionallyDown
         if let icon = runningApplications[index].icon {
             item.image = icon
@@ -142,7 +145,7 @@ extension RangeReplaceableCollection {
 
 extension Collection {
     
-    subscript (safe index: Self.Index) -> Self.Iterator.Element? {
+    subscript(safe index: Self.Index) -> Self.Iterator.Element? {
         guard index < endIndex else {
             return nil
         }
@@ -156,8 +159,8 @@ private func launchedApplications() -> [NSRunningApplication] {
     let asns = _LSCopyApplicationArrayInFrontToBackOrder(~0)?.takeRetainedValue()
     return (0..<CFArrayGetCount(asns)).flatMap { index in
         let asn = CFArrayGetValueAtIndex(asns, index)
-        guard let pid = pidFromASN(asn)?.takeRetainedValue() else { return nil }
-        return NSRunningApplication(processIdentifier: pid as! pid_t)
+        let pid = pidFromASN(asn)
+        return NSRunningApplication(processIdentifier: pid)
     }
 }
 
