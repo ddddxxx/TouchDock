@@ -30,7 +30,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     private override init() {
         super.init()
         touchBar.delegate = self
-        touchBar.defaultItemIdentifiers = [.appsOrder, .appScrubber]
+        touchBar.defaultItemIdentifiers = [.appsOrder, .appScrubber, .quitApp]
         
         NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
             if event.modifierFlags.contains(.command) {
@@ -78,6 +78,10 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         case .appScrubber:
             appScrubber = AppScrubberTouchBarItem(identifier: identifier)
             return appScrubber
+        case .quitApp:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Quit"), target: NSApplication.shared, action: #selector(NSApplication.terminate))
+            return item
         default:
             return nil
         }

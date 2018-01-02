@@ -32,6 +32,7 @@ extension NSTouchBarItem.Identifier {
     
     static let appsOrder = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.appsOrder")
     static let appScrubber = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.appScrubber")
+    static let quitApp = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.quitApp")
     
     static let systemTrayItem = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
 }
