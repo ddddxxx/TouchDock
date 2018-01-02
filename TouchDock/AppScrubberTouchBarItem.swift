@@ -153,6 +153,9 @@ private func dockPersistentApplications() -> [NSRunningApplication] {
         if lhs.bundleIdentifier == "com.apple.finder" {
             return true
         }
+        if rhs.bundleIdentifier == "com.apple.finder" {
+            return false
+        }
         switch ((bundleIDs.index(of: lhs.bundleIdentifier!)), bundleIDs.index(of: rhs.bundleIdentifier!)) {
         case (nil, _):
             return false;
