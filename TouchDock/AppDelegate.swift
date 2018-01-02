@@ -23,27 +23,8 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    @IBOutlet weak var statusMenu: NSMenu!
-    var statusItem: NSStatusItem!
-    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength).then {
-            $0.button?.image = #imageLiteral(resourceName: "StatusBar.Icon")
-            $0.length = 32
-            $0.target = self
-            $0.action = #selector(clickStatusItem)
-        }
-        
         TouchBarController.shared.setupControlStripPresence()
-    }
-    
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-    
-    @objc func clickStatusItem() {
-        TouchBarController.shared.updateControlStripPresence()
-        statusItem.popUpMenu(statusMenu)
     }
     
 }

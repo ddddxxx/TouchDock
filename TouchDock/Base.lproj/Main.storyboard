@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -654,20 +653,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="TouchDock" customModuleProvider="target">
-                    <connections>
-                        <outlet property="statusMenu" destination="CSP-S8-9Do" id="cQT-qb-NKn"/>
-                    </connections>
-                </customObject>
-                <menu id="CSP-S8-9Do">
-                    <items>
-                        <menuItem title="Quit TouchDock" keyEquivalent="q" id="njo-lX-Xnt">
-                            <connections>
-                                <action selector="terminate:" target="hnw-xV-0zn" id="Abx-j6-KH4"/>
-                            </connections>
-                        </menuItem>
-                    </items>
-                </menu>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="TouchDock" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
