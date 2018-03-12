@@ -46,7 +46,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         workspaceNC.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didLaunchApplicationNotification, object: nil)
         workspaceNC.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didTerminateApplicationNotification, object: nil)
         workspaceNC.addObserver(self, selector: #selector(activeApplicationChanged), name: NSWorkspace.didActivateApplicationNotification, object: nil)
-        defaults.addObserver(self, forKeyPath: appScrubberOrderDock, context: nil)
+        defaults.addObserver(self, forKeyPath: appScrubberOrderIndex, context: nil)
         
         updateRunningApplication(animated: false)
     }
@@ -64,7 +64,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     func updateRunningApplication(animated: Bool) {
-        let isDockOrder = defaults.bool(forKey: appScrubberOrderDock)
+        let isDockOrder = defaults.integer(forKey: appScrubberOrderIndex) != 0
         let newApplications = (isDockOrder ? dockPersistentApplications() : launchedApplications()).filter {
             !$0.isTerminated && $0.bundleIdentifier != nil
         }

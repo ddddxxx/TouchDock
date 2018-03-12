@@ -30,10 +30,11 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     private override init() {
         super.init()
         touchBar.delegate = self
-        touchBar.defaultItemIdentifiers = [.appsOrder, .appScrubber, .quitApp]
+        touchBar.defaultItemIdentifiers = [.appScrubber, .preferences, .quitApp]
         
         NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
-            if event.modifierFlags.contains(.command) {
+            let key = defaults.activateKey
+            if event.modifierFlags.contains(key) {
                 self.presentTouchBar()
             } else {
                 self.dismissTouchBar()
@@ -62,22 +63,23 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         NSTouchBar.minimizeSystemModalFunctionBar(touchBar)
     }
     
+    @objc private func showPreferencesWindow() {
+        let preferencesWindowController = NSStoryboard.main?.instantiateController(withIdentifier: .preferencesWindowController) as? NSWindowController
+        preferencesWindowController?.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+    
     // MARK: - NSTouchBarDelegate
     
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         switch identifier {
-        case .appsOrder:
-            let item = NSCustomTouchBarItem(identifier: identifier)
-            item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Dock"), target: nil, action: nil).then {
-                $0.setButtonType(.toggle)
-                $0.bezelStyle = .rounded
-                $0.alternateImage = #imageLiteral(resourceName: "TouchBar.Recent")
-                $0.bind(.value, to: defaults, withKeyPath: appScrubberOrderDock)
-            }
-            return item
         case .appScrubber:
             appScrubber = AppScrubberTouchBarItem(identifier: identifier)
             return appScrubber
+        case .preferences:
+            let item = NSCustomTouchBarItem(identifier: identifier)
+            item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Setting"), target: self, action: #selector(showPreferencesWindow))
+            return item
         case .quitApp:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Quit"), target: NSApplication.shared, action: #selector(NSApplication.terminate))
