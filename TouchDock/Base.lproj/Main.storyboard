@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -657,6 +659,109 @@
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="g2U-tI-qe9">
+            <objects>
+                <windowController storyboardIdentifier="PreferencesWindowController" showSeguePresentationStyle="single" id="O76-2d-hO4" sceneMemberID="viewController">
+                    <window key="window" title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="PreferencesWindow" animationBehavior="default" id="JS0-KK-fBT">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="511" y="368" width="352" height="98"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
+                        <connections>
+                            <outlet property="delegate" destination="O76-2d-hO4" id="euM-lY-NKt"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="9A4-Kv-VGi" kind="relationship" relationship="window.shadowedContentViewController" id="8yC-vy-WZv"/>
+                    </connections>
+                </windowController>
+                <customObject id="L6h-fk-XzF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="77" y="350"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="02a-Nn-wrM">
+            <objects>
+                <viewController id="9A4-Kv-VGi" sceneMemberID="viewController">
+                    <view key="view" id="fBe-LS-vNQ">
+                        <rect key="frame" x="0.0" y="0.0" width="352" height="98"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xBw-EJ-fec">
+                                <rect key="frame" x="166" y="52" width="65" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="svs-gi-TGZ"/>
+                                </constraints>
+                                <popUpButtonCell key="cell" type="push" title="⌘" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="Qyu-pt-VFb" id="n4W-1U-vSp">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="xi7-5P-URb">
+                                        <items>
+                                            <menuItem title="⌘" state="on" id="Qyu-pt-VFb"/>
+                                            <menuItem title="⌥" id="Jhq-6w-odP"/>
+                                            <menuItem title="⌃" id="fRe-1f-gbK">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="⇧" id="d4X-v0-GpW"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <binding destination="Sm1-OF-b9S" name="selectedIndex" keyPath="values.ActivateKeyIndex" id="Wvf-XP-E6r"/>
+                                </connections>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ddn-zR-KpW">
+                                <rect key="frame" x="71" y="57" width="83" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Activate Key:" id="aW1-6d-Iac">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c3R-Wu-4Gw">
+                                <rect key="frame" x="166" y="19" width="150" height="26"/>
+                                <popUpButtonCell key="cell" type="push" title="Most Recent" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="7of-y4-aLV" id="3N7-mZ-PgD">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="D19-ul-y3F">
+                                        <items>
+                                            <menuItem title="Most Recent" state="on" id="7of-y4-aLV"/>
+                                            <menuItem title="The Same as Dock" id="dxA-IM-Zeo"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <binding destination="Sm1-OF-b9S" name="selectedIndex" keyPath="values.AppScrubberOrderIndex" id="TEl-tt-2Zf"/>
+                                </connections>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e6l-b6-cgy">
+                                <rect key="frame" x="73" y="24" width="81" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="App's Order:" id="VVi-hF-7hH">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="e6l-b6-cgy" firstAttribute="top" secondItem="Ddn-zR-KpW" secondAttribute="bottom" constant="16" id="8ug-na-ixG"/>
+                            <constraint firstItem="Ddn-zR-KpW" firstAttribute="trailing" secondItem="fBe-LS-vNQ" secondAttribute="centerX" constant="-24" id="F9O-HV-VgF"/>
+                            <constraint firstAttribute="bottom" secondItem="e6l-b6-cgy" secondAttribute="bottom" constant="24" id="Jsn-1i-jL1"/>
+                            <constraint firstItem="e6l-b6-cgy" firstAttribute="trailing" secondItem="Ddn-zR-KpW" secondAttribute="trailing" id="Ll3-TU-JJj"/>
+                            <constraint firstItem="xBw-EJ-fec" firstAttribute="leading" secondItem="Ddn-zR-KpW" secondAttribute="trailing" constant="16" id="NF8-Ll-U6B"/>
+                            <constraint firstItem="xBw-EJ-fec" firstAttribute="centerY" secondItem="Ddn-zR-KpW" secondAttribute="centerY" id="R2O-Ch-bXz"/>
+                            <constraint firstItem="c3R-Wu-4Gw" firstAttribute="centerY" secondItem="e6l-b6-cgy" secondAttribute="centerY" id="WqX-dd-4PK"/>
+                            <constraint firstItem="c3R-Wu-4Gw" firstAttribute="leading" secondItem="e6l-b6-cgy" secondAttribute="trailing" constant="16" id="ip3-dI-fz7"/>
+                            <constraint firstItem="Ddn-zR-KpW" firstAttribute="top" secondItem="fBe-LS-vNQ" secondAttribute="top" constant="24" id="zFa-Nt-kQm"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="hn6-cX-bx6" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController representsSharedInstance="YES" id="Sm1-OF-b9S"/>
+            </objects>
+            <point key="canvasLocation" x="77" y="619"/>
         </scene>
     </scenes>
 </document>

@@ -28,13 +28,27 @@ extension NSUserInterfaceItemIdentifier {
     static let scrubberApplicationsItem = NSUserInterfaceItemIdentifier("ScrubberApplicationsItemReuseIdentifier")
 }
 
+extension NSStoryboard.SceneIdentifier {
+    static let preferencesWindowController = NSStoryboard.SceneIdentifier("PreferencesWindowController")
+}
+
 extension NSTouchBarItem.Identifier {
     
-    static let appsOrder = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.appsOrder")
     static let appScrubber = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.appScrubber")
+    static let preferences = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.preferences")
     static let quitApp = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.quitApp")
     
     static let systemTrayItem = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
 }
 
-let appScrubberOrderDock = "AppScrubberOrderDock"
+let activateKeyIndex = "ActivateKeyIndex"
+let appScrubberOrderIndex = "AppScrubberOrderIndex"
+
+extension UserDefaults {
+    
+    var activateKey: NSEvent.ModifierFlags {
+        let keys: [NSEvent.ModifierFlags] = [.command, .option, .control, .shift]
+        let index = integer(forKey: activateKeyIndex)
+        return keys[index]
+    }
+}
