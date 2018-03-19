@@ -45,8 +45,9 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         touchBar.defaultItemIdentifiers = [.appScrubber, .preferences, .quitApp]
         
         keyMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
-            let key = defaults.activateKey
-            self.isHotKeyDown = event.modifierFlags.contains(key)
+            if let key = defaults.activateKey {
+                self.isHotKeyDown = event.modifierFlags.contains(key)
+            }
         }
     }
     
