@@ -46,8 +46,8 @@ let appScrubberOrderIndex = "AppScrubberOrderIndex"
 
 extension UserDefaults {
     
-    var activateKey: NSEvent.ModifierFlags {
-        let keys: [NSEvent.ModifierFlags] = [.command, .option, .control, .shift]
+    var activateKey: NSEvent.ModifierFlags? {
+        let keys: [NSEvent.ModifierFlags?] = [.command, .option, .control, .shift, nil]
         let index = integer(forKey: activateKeyIndex)
         return keys[index]
     }

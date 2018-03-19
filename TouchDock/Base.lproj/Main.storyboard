@@ -699,12 +699,21 @@
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="xi7-5P-URb">
                                         <items>
-                                            <menuItem title="⌘" state="on" id="Qyu-pt-VFb"/>
-                                            <menuItem title="⌥" id="Jhq-6w-odP"/>
+                                            <menuItem title="⌘" state="on" id="Qyu-pt-VFb">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="⌥" id="Jhq-6w-odP">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
                                             <menuItem title="⌃" id="fRe-1f-gbK">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
-                                            <menuItem title="⇧" id="d4X-v0-GpW"/>
+                                            <menuItem title="⇧" id="d4X-v0-GpW">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="None" id="VsQ-AQ-c3u">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
