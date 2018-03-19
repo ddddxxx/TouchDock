@@ -27,6 +27,8 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     let touchBar = NSTouchBar()
     weak var appScrubber: AppScrubberTouchBarItem?
     
+    var keyMonitor: Any?
+    
     var isHotKeyDown = false {
         didSet {
             if !oldValue && isHotKeyDown {
@@ -42,10 +44,14 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         touchBar.delegate = self
         touchBar.defaultItemIdentifiers = [.appScrubber, .preferences, .quitApp]
         
-        NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
+        keyMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
             let key = defaults.activateKey
             self.isHotKeyDown = event.modifierFlags.contains(key)
         }
+    }
+    
+    deinit {
+        keyMonitor.map(NSEvent.removeMonitor)
     }
     
     func setupControlStripPresence() {
