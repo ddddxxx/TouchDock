@@ -27,6 +27,16 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     let touchBar = NSTouchBar()
     weak var appScrubber: AppScrubberTouchBarItem?
     
+    var isHotKeyDown = false {
+        didSet {
+            if !oldValue && isHotKeyDown {
+                self.presentTouchBar()
+            } else if oldValue && !isHotKeyDown {
+                self.dismissTouchBar()
+            }
+        }
+    }
+    
     private override init() {
         super.init()
         touchBar.delegate = self
@@ -34,11 +44,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         
         NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
             let key = defaults.activateKey
-            if event.modifierFlags.contains(key) {
-                self.presentTouchBar()
-            } else {
-                self.dismissTouchBar()
-            }
+            self.isHotKeyDown = event.modifierFlags.contains(key)
         }
     }
     
