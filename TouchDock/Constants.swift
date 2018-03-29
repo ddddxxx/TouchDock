@@ -43,6 +43,7 @@ extension NSTouchBarItem.Identifier {
 
 let activateKeyIndex = "ActivateKeyIndex"
 let appScrubberOrderIndex = "AppScrubberOrderIndex"
+let appScrubberModeIndex = "AppScrubberModeIndex"
 
 extension UserDefaults {
     
@@ -50,5 +51,11 @@ extension UserDefaults {
         let keys: [NSEvent.ModifierFlags?] = [.command, .option, .control, .shift, nil]
         let index = integer(forKey: activateKeyIndex)
         return keys[index]
+    }
+    
+    var appScrubberMode: NSScrubber.Mode {
+        let actions: [NSScrubber.Mode] = [.fixed, .free]
+        let index = integer(forKey: appScrubberModeIndex)
+        return actions[index]
     }
 }

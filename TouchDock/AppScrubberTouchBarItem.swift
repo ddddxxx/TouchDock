@@ -32,7 +32,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         scrubber = NSScrubber().then {
             $0.delegate = self
             $0.dataSource = self
-            $0.mode = .fixed
+            $0.mode = defaults.appScrubberMode
             let layout = NSScrubberFlowLayout().then {
                 $0.itemSize = NSSize(width: 65, height: 30)
             }
