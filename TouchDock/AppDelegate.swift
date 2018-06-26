@@ -21,7 +21,11 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSTouchBarProvider {
+    
+    var touchBar: NSTouchBar? {
+        return TouchBarController.shared.touchBar
+    }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         TouchBarController.shared.setupControlStripPresence()

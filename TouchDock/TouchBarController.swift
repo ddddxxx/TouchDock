@@ -43,6 +43,8 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         super.init()
         touchBar.delegate = self
         touchBar.defaultItemIdentifiers = [.appScrubber, .preferences, .quitApp]
+        touchBar.customizationIdentifier = NSTouchBar.CustomizationIdentifier("ddddxxx.TouchDock")
+        touchBar.customizationAllowedItemIdentifiers = [.appScrubber, .preferences, .quitApp]
         
         keyMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
             if let key = defaults.activateKey {
@@ -88,14 +90,17 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         switch identifier {
         case .appScrubber:
             appScrubber = AppScrubberTouchBarItem(identifier: identifier)
+            appScrubber?.customizationLabel = "Application List"
             return appScrubber
         case .preferences:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Setting"), target: self, action: #selector(showPreferencesWindow))
+            item.customizationLabel = "Preferences"
             return item
         case .quitApp:
             let item = NSCustomTouchBarItem(identifier: identifier)
             item.view = NSButton(title: "", image: #imageLiteral(resourceName: "TouchBar.Quit"), target: NSApplication.shared, action: #selector(NSApplication.terminate))
+            item.customizationLabel = "Quit TouchDock"
             return item
         default:
             return nil
