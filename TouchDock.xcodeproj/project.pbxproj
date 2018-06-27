@@ -16,6 +16,7 @@
 		BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE681EE27BE300445D54 /* TouchBarController.swift */; };
 		BBE1ED911FFBCB820022BD3A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1ED901FFBCB820022BD3A /* Constants.swift */; };
 		BBE1ED931FFBCBEF0022BD3A /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1ED921FFBCBEF0022BD3A /* Collection+Extension.swift */; };
+		E94DFB7320E1F1FF00BF28EF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94DFB7220E1F1FF00BF28EF /* Utilities.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		BBE1CE681EE27BE300445D54 /* TouchBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarController.swift; sourceTree = "<group>"; };
 		BBE1ED901FFBCB820022BD3A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BBE1ED921FFBCBEF0022BD3A /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
+		E94DFB7220E1F1FF00BF28EF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */,
 				BBE1ED921FFBCBEF0022BD3A /* Collection+Extension.swift */,
 				BBE1ED901FFBCB820022BD3A /* Constants.swift */,
+				E94DFB7220E1F1FF00BF28EF /* Utilities.swift */,
 				BBCC721A1FFBB53F0090C7E0 /* Then.swift */,
 				BBE1CE561EE27A4400445D54 /* Main.storyboard */,
 				BB6D867A1EE3A99C00FC9A10 /* CBridge */,
@@ -196,6 +199,7 @@
 			files = (
 				BB19EDC01EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift in Sources */,
 				BBE1ED931FFBCBEF0022BD3A /* Collection+Extension.swift in Sources */,
+				E94DFB7320E1F1FF00BF28EF /* Utilities.swift in Sources */,
 				BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */,
 				BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */,
 				BBCC721B1FFBB53F0090C7E0 /* Then.swift in Sources */,
