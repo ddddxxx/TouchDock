@@ -45,3 +45,15 @@ extern void DFRSystemModalShowsCloseBoxWhenFrontMost(BOOL);
 + (void)minimizeSystemModalFunctionBar:(NSTouchBar *)touchBar;
 
 @end
+
+#import <Carbon/Carbon.h>
+
+extern CFArrayRef _LSCopyApplicationArrayInFrontToBackOrder(uint32_t sessionID);
+
+@interface NSRunningApplication (PrivateMethods)
+
++ (NSArray<NSRunningApplication *> *)_transformASNArrayToAppArrayWithRelease:(CFArrayRef)asnArray;
+
+- (instancetype)initWithApplicationSerialNumber:(CFTypeRef)asn;
+
+@end

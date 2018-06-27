@@ -130,12 +130,8 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
 // MARK: - Applications
 
 private func launchedApplications() -> [NSRunningApplication] {
-    let asns = _LSCopyApplicationArrayInFrontToBackOrder(~0)?.takeRetainedValue()
-    return (0..<CFArrayGetCount(asns)).flatMap { index in
-        let asn = CFArrayGetValueAtIndex(asns, index)
-        let pid = pidFromASN(asn)
-        return NSRunningApplication(processIdentifier: pid)
-    }
+    let asns = _LSCopyApplicationArrayInFrontToBackOrder(~0)
+    return NSRunningApplication._transformASNArrayToAppArray(withRelease: asns?.takeUnretainedValue())
 }
 
 private func dockPersistentApplications() -> [NSRunningApplication] {
@@ -145,7 +141,7 @@ private func dockPersistentApplications() -> [NSRunningApplication] {
     
     guard let dockDefaults = UserDefaults(suiteName: "com.apple.dock"),
         let persistentApps = dockDefaults.array(forKey: "persistent-apps") as [AnyObject]?,
-        let bundleIDs = persistentApps.flatMap({ $0.value(forKeyPath: "tile-data.bundle-identifier") }) as? [String] else {
+        let bundleIDs = persistentApps.compactMap({ $0.value(forKeyPath: "tile-data.bundle-identifier") }) as? [String] else {
             return apps
     }
     

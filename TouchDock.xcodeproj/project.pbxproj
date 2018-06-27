@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		BB19EDC01EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */; };
-		BB385D301EE30C8200723427 /* DeprecatedCarbonAPI.c in Sources */ = {isa = PBXBuildFile; fileRef = BB385D2E1EE30C8200723427 /* DeprecatedCarbonAPI.c */; };
 		BBCC721B1FFBB53F0090C7E0 /* Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCC721A1FFBB53F0090C7E0 /* Then.swift */; };
 		BBCC721F1FFBB9020090C7E0 /* DFRFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBCC721E1FFBB9020090C7E0 /* DFRFoundation.framework */; };
 		BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE501EE27A4300445D54 /* AppDelegate.swift */; };
@@ -21,8 +20,6 @@
 
 /* Begin PBXFileReference section */
 		BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppScrubberTouchBarItem.swift; sourceTree = "<group>"; };
-		BB385D2E1EE30C8200723427 /* DeprecatedCarbonAPI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DeprecatedCarbonAPI.c; sourceTree = "<group>"; };
-		BB385D2F1EE30C8200723427 /* DeprecatedCarbonAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeprecatedCarbonAPI.h; sourceTree = "<group>"; };
 		BBCC721A1FFBB53F0090C7E0 /* Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Then.swift; sourceTree = "<group>"; };
 		BBCC721E1FFBB9020090C7E0 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = /System/Library/PrivateFrameworks/DFRFoundation.framework; sourceTree = "<absolute>"; };
 		BBE1CE4D1EE27A4300445D54 /* TouchDock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchDock.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,7 +27,7 @@
 		BBE1CE541EE27A4300445D54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		BBE1CE571EE27A4400445D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBE1CE591EE27A4400445D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BBE1CE631EE27B2800445D54 /* TouchBarPrivateAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchBarPrivateAPI.h; sourceTree = "<group>"; };
+		BBE1CE631EE27B2800445D54 /* PrivateAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateAPI.h; sourceTree = "<group>"; };
 		BBE1CE641EE27B3800445D54 /* TouchDock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TouchDock-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBE1CE681EE27BE300445D54 /* TouchBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarController.swift; sourceTree = "<group>"; };
 		BBE1ED901FFBCB820022BD3A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -52,9 +49,7 @@
 		BB6D867A1EE3A99C00FC9A10 /* CBridge */ = {
 			isa = PBXGroup;
 			children = (
-				BBE1CE631EE27B2800445D54 /* TouchBarPrivateAPI.h */,
-				BB385D2F1EE30C8200723427 /* DeprecatedCarbonAPI.h */,
-				BB385D2E1EE30C8200723427 /* DeprecatedCarbonAPI.c */,
+				BBE1CE631EE27B2800445D54 /* PrivateAPI.h */,
 			);
 			path = CBridge;
 			sourceTree = "<group>";
@@ -204,7 +199,6 @@
 				BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */,
 				BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */,
 				BBCC721B1FFBB53F0090C7E0 /* Then.swift in Sources */,
-				BB385D301EE30C8200723427 /* DeprecatedCarbonAPI.c in Sources */,
 				BBE1ED911FFBCB820022BD3A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
