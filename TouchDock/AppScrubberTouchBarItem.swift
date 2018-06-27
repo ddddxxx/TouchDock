@@ -28,7 +28,15 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     
     override init(identifier: NSTouchBarItem.Identifier) {
         super.init(identifier: identifier)
-        
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    func commonInit() {
         scrubber = NSScrubber().then {
             $0.delegate = self
             $0.dataSource = self
@@ -49,10 +57,6 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         defaults.addObserver(self, forKeyPath: appScrubberOrderIndex, context: nil)
         
         updateRunningApplication(animated: false)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     @objc func activeApplicationChanged(n: Notification) {
