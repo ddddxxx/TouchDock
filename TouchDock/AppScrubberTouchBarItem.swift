@@ -28,7 +28,15 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     
     override init(identifier: NSTouchBarItem.Identifier) {
         super.init(identifier: identifier)
-        
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    func commonInit() {
         scrubber = NSScrubber().then {
             $0.delegate = self
             $0.dataSource = self
@@ -51,10 +59,6 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         updateRunningApplication(animated: false)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     @objc func activeApplicationChanged(n: Notification) {
         updateRunningApplication(animated: true)
     }
@@ -68,18 +72,14 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         let newApplications = (isDockOrder ? dockPersistentApplications() : launchedApplications()).filter {
             !$0.isTerminated && $0.bundleIdentifier != nil
         }
-        let frontmost = NSWorkspace.shared.frontmostApplication
-        let index = newApplications.index {
-            $0.processIdentifier == frontmost?.processIdentifier
-        }
         if animated {
             scrubber.performSequentialBatchUpdates {
-                print("-----update-----")
+                log("-----update-----")
                 for (index, app) in newApplications.enumerated() {
                     while runningApplications[safe:index].map(newApplications.contains) == false {
                         scrubber.removeItems(at: [index])
                         let r = runningApplications.remove(at: index)
-                        print("remove \(r.localizedName!) at \(index)")
+                        log("remove \(r.localizedName!) at \(index)")
                     }
                     if let oldIndex = runningApplications.index(of: app) {
                         guard oldIndex != index else {
@@ -87,11 +87,11 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
                         }
                         scrubber.moveItem(at: oldIndex, to: index)
                         runningApplications.move(at: oldIndex, to: index)
-                        print("move \(app.localizedName!) at \(oldIndex) to \(index)")
+                        log("move \(app.localizedName!) at \(oldIndex) to \(index)")
                     } else {
                         scrubber.insertItems(at: [index])
                         runningApplications.insert(app, at: index)
-                        print("insert \(app.localizedName!) to \(index)")
+                        log("insert \(app.localizedName!) to \(index)")
                     }
                 }
                 assert(runningApplications == newApplications)
@@ -99,8 +99,10 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         } else {
             runningApplications = newApplications
             scrubber.reloadData()
+            scrubber.animator().selectedIndex = -1
         }
-        scrubber.selectedIndex = index ?? 0
+        let index = NSWorkspace.shared.frontmostApplication.flatMap(newApplications.index) ?? -1
+        scrubber.selectedIndex = index
     }
     
     // MARK: - NSScrubberDataSource
@@ -130,12 +132,8 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
 // MARK: - Applications
 
 private func launchedApplications() -> [NSRunningApplication] {
-    let asns = _LSCopyApplicationArrayInFrontToBackOrder(~0)?.takeRetainedValue()
-    return (0..<CFArrayGetCount(asns)).flatMap { index in
-        let asn = CFArrayGetValueAtIndex(asns, index)
-        let pid = pidFromASN(asn)
-        return NSRunningApplication(processIdentifier: pid)
-    }
+    let asns = _LSCopyApplicationArrayInFrontToBackOrder(~0)
+    return NSRunningApplication._transformASNArrayToAppArray(withRelease: asns?.takeUnretainedValue())
 }
 
 private func dockPersistentApplications() -> [NSRunningApplication] {
@@ -145,7 +143,7 @@ private func dockPersistentApplications() -> [NSRunningApplication] {
     
     guard let dockDefaults = UserDefaults(suiteName: "com.apple.dock"),
         let persistentApps = dockDefaults.array(forKey: "persistent-apps") as [AnyObject]?,
-        let bundleIDs = persistentApps.flatMap({ $0.value(forKeyPath: "tile-data.bundle-identifier") }) as? [String] else {
+        let bundleIDs = persistentApps.compactMap({ $0.value(forKeyPath: "tile-data.bundle-identifier") }) as? [String] else {
             return apps
     }
     

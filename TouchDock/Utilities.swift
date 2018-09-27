@@ -1,5 +1,5 @@
 //
-//  DeprecatedCarbonAPI.h
+//  Utilities.swift
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng
@@ -18,10 +18,10 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import <Carbon/Carbon.h>
+import Foundation
 
-extern CFArrayRef _LSCopyApplicationArrayInFrontToBackOrder(uint32_t sessionID);
-extern void _LSASNExtractHighAndLowParts(void const* asn, UInt32* psnHigh, UInt32* psnLow);
-extern CFTypeID _LSASNGetTypeID(void);
-
-pid_t pidFromASN(void const *asn);
+func log(_ str: String) {
+    #if DEBUG
+    print(str)
+    #endif
+}

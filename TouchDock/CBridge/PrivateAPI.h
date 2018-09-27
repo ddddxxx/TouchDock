@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  TouchBarPrivateAPI.h
 //
 //  This file is part of TouchDock
 //  Copyright (C) 2017  Xander Deng
@@ -18,18 +18,15 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Cocoa
+#import <AppKit/AppKit.h>
+#import <Carbon/Carbon.h>
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSTouchBarProvider {
-    
-    var touchBar: NSTouchBar? {
-        return TouchBarController.shared.touchBar
-    }
-    
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        TouchBarController.shared.setupControlStripPresence()
-    }
-    
-}
+extern CFArrayRef _LSCopyApplicationArrayInFrontToBackOrder(uint32_t sessionID);
 
+@interface NSRunningApplication (PrivateMethods)
+
++ (NSArray<NSRunningApplication *> *)_transformASNArrayToAppArrayWithRelease:(CFArrayRef)asnArray;
+
+- (instancetype)initWithApplicationSerialNumber:(CFTypeRef)asn;
+
+@end

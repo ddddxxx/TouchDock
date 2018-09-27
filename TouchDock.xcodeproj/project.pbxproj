@@ -8,33 +8,47 @@
 
 /* Begin PBXBuildFile section */
 		BB19EDC01EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */; };
-		BB385D301EE30C8200723427 /* DeprecatedCarbonAPI.c in Sources */ = {isa = PBXBuildFile; fileRef = BB385D2E1EE30C8200723427 /* DeprecatedCarbonAPI.c */; };
 		BBCC721B1FFBB53F0090C7E0 /* Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCC721A1FFBB53F0090C7E0 /* Then.swift */; };
-		BBCC721F1FFBB9020090C7E0 /* DFRFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBCC721E1FFBB9020090C7E0 /* DFRFoundation.framework */; };
 		BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE501EE27A4300445D54 /* AppDelegate.swift */; };
 		BBE1CE551EE27A4300445D54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE541EE27A4300445D54 /* Assets.xcassets */; };
 		BBE1CE581EE27A4400445D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE561EE27A4400445D54 /* Main.storyboard */; };
 		BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE681EE27BE300445D54 /* TouchBarController.swift */; };
 		BBE1ED911FFBCB820022BD3A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1ED901FFBCB820022BD3A /* Constants.swift */; };
 		BBE1ED931FFBCBEF0022BD3A /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1ED921FFBCBEF0022BD3A /* Collection+Extension.swift */; };
+		E94DFB7320E1F1FF00BF28EF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94DFB7220E1F1FF00BF28EF /* Utilities.swift */; };
+		E97AFB5E215CC2C500AF74CD /* TouchBarHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97AFB5D215CC2C400AF74CD /* TouchBarHelper.framework */; };
+		E97AFB5F215CC2C500AF74CD /* TouchBarHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97AFB5D215CC2C400AF74CD /* TouchBarHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E97AFB60215CC2C500AF74CD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E97AFB5F215CC2C500AF74CD /* TouchBarHelper.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppScrubberTouchBarItem.swift; sourceTree = "<group>"; };
-		BB385D2E1EE30C8200723427 /* DeprecatedCarbonAPI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = DeprecatedCarbonAPI.c; sourceTree = "<group>"; };
-		BB385D2F1EE30C8200723427 /* DeprecatedCarbonAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeprecatedCarbonAPI.h; sourceTree = "<group>"; };
 		BBCC721A1FFBB53F0090C7E0 /* Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Then.swift; sourceTree = "<group>"; };
-		BBCC721E1FFBB9020090C7E0 /* DFRFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRFoundation.framework; path = /System/Library/PrivateFrameworks/DFRFoundation.framework; sourceTree = "<absolute>"; };
 		BBE1CE4D1EE27A4300445D54 /* TouchDock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchDock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBE1CE501EE27A4300445D54 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BBE1CE541EE27A4300445D54 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../Assets.xcassets; sourceTree = "<group>"; };
 		BBE1CE571EE27A4400445D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBE1CE591EE27A4400445D54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BBE1CE631EE27B2800445D54 /* TouchBarPrivateAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchBarPrivateAPI.h; sourceTree = "<group>"; };
+		BBE1CE631EE27B2800445D54 /* PrivateAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateAPI.h; sourceTree = "<group>"; };
 		BBE1CE641EE27B3800445D54 /* TouchDock-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TouchDock-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBE1CE681EE27BE300445D54 /* TouchBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchBarController.swift; sourceTree = "<group>"; };
 		BBE1ED901FFBCB820022BD3A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BBE1ED921FFBCBEF0022BD3A /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
+		E94DFB7220E1F1FF00BF28EF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		E97AFB5D215CC2C400AF74CD /* TouchBarHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TouchBarHelper.framework; path = Carthage/Build/Mac/TouchBarHelper.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBCC721F1FFBB9020090C7E0 /* DFRFoundation.framework in Frameworks */,
+				E97AFB5E215CC2C500AF74CD /* TouchBarHelper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,9 +66,7 @@
 		BB6D867A1EE3A99C00FC9A10 /* CBridge */ = {
 			isa = PBXGroup;
 			children = (
-				BBE1CE631EE27B2800445D54 /* TouchBarPrivateAPI.h */,
-				BB385D2F1EE30C8200723427 /* DeprecatedCarbonAPI.h */,
-				BB385D2E1EE30C8200723427 /* DeprecatedCarbonAPI.c */,
+				BBE1CE631EE27B2800445D54 /* PrivateAPI.h */,
 			);
 			path = CBridge;
 			sourceTree = "<group>";
@@ -62,7 +74,7 @@
 		BBCC721D1FFBB9010090C7E0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BBCC721E1FFBB9020090C7E0 /* DFRFoundation.framework */,
+				E97AFB5D215CC2C400AF74CD /* TouchBarHelper.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -92,6 +104,7 @@
 				BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */,
 				BBE1ED921FFBCBEF0022BD3A /* Collection+Extension.swift */,
 				BBE1ED901FFBCB820022BD3A /* Constants.swift */,
+				E94DFB7220E1F1FF00BF28EF /* Utilities.swift */,
 				BBCC721A1FFBB53F0090C7E0 /* Then.swift */,
 				BBE1CE561EE27A4400445D54 /* Main.storyboard */,
 				BB6D867A1EE3A99C00FC9A10 /* CBridge */,
@@ -121,6 +134,7 @@
 				BBE1CE4A1EE27A4300445D54 /* Frameworks */,
 				BBE1CE4B1EE27A4300445D54 /* Resources */,
 				BB19EDC51EE7ABEB00CD05EB /* ShellScript */,
+				E97AFB60215CC2C500AF74CD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -138,7 +152,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = ddddxxx;
 				TargetAttributes = {
 					BBE1CE4C1EE27A4300445D54 = {
@@ -201,10 +215,10 @@
 			files = (
 				BB19EDC01EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift in Sources */,
 				BBE1ED931FFBCBEF0022BD3A /* Collection+Extension.swift in Sources */,
+				E94DFB7320E1F1FF00BF28EF /* Utilities.swift in Sources */,
 				BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */,
 				BBE1CE691EE27BE300445D54 /* TouchBarController.swift in Sources */,
 				BBCC721B1FFBB53F0090C7E0 /* Then.swift in Sources */,
-				BB385D301EE30C8200723427 /* DeprecatedCarbonAPI.c in Sources */,
 				BBE1ED911FFBCB820022BD3A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,6 +251,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -244,6 +259,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -293,6 +309,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -300,6 +317,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -336,6 +354,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "TouchDock/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -356,6 +375,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				INFOPLIST_FILE = "TouchDock/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

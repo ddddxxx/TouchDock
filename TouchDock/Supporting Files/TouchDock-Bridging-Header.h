@@ -1,2 +1,1 @@
-#import "TouchBarPrivateAPI.h"
-#import "DeprecatedCarbonAPI.h"
+#import "PrivateAPI.h"
