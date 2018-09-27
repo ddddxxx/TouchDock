@@ -19,6 +19,7 @@
 //
 
 import Cocoa
+import TouchBarHelper
 
 class TouchBarController: NSObject, NSTouchBarDelegate {
     
@@ -61,7 +62,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         DFRSystemModalShowsCloseBoxWhenFrontMost(true)
         let item = NSCustomTouchBarItem(identifier: .systemTrayItem)
         item.view = NSButton(image: #imageLiteral(resourceName: "TouchBar.Apps"), target: self, action: #selector(presentTouchBar))
-        NSTouchBarItem.addSystemTrayItem(item)
+        item.addSystemTray()
         DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
     }
     
@@ -71,11 +72,11 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     
     @objc private func presentTouchBar() {
         appScrubber?.updateRunningApplication(animated: false)
-        NSTouchBar.presentSystemModalFunctionBar(touchBar, systemTrayItemIdentifier: .systemTrayItem)
+        touchBar.presentSystemModal(systemTrayItemIdentifier: .systemTrayItem)
     }
     
     private func dismissTouchBar() {
-        NSTouchBar.minimizeSystemModalFunctionBar(touchBar)
+        touchBar.minimizeSystemModal()
     }
     
     @objc private func showPreferencesWindow() {
@@ -89,8 +90,9 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     func touchBar(_ touchBar: NSTouchBar, makeItemForIdentifier identifier: NSTouchBarItem.Identifier) -> NSTouchBarItem? {
         switch identifier {
         case .appScrubber:
-            appScrubber = AppScrubberTouchBarItem(identifier: identifier)
-            appScrubber?.customizationLabel = "Application List"
+            let appScrubber = AppScrubberTouchBarItem(identifier: identifier)
+            appScrubber.customizationLabel = "Application List"
+            self.appScrubber = appScrubber
             return appScrubber
         case .preferences:
             let item = NSCustomTouchBarItem(identifier: identifier)
