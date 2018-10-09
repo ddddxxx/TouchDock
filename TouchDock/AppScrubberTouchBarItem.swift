@@ -121,7 +121,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     public func didFinishInteracting(with scrubber: NSScrubber) {
-        guard scrubber.selectedIndex > 0 else {
+        guard scrubber.selectedIndex >= 0 else {
             return
         }
         let app = runningApplications[scrubber.selectedIndex]
