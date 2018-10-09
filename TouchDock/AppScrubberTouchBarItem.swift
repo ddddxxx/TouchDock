@@ -124,9 +124,28 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
         guard scrubber.selectedIndex > 0 else {
             return
         }
-        runningApplications[scrubber.selectedIndex].activate(options: .activateIgnoringOtherApps)
+        let app = runningApplications[scrubber.selectedIndex]
+        app.reopen()
+        app.activate(options: .activateIgnoringOtherApps)
     }
     
+}
+
+extension NSRunningApplication {
+    
+    func sendEvent(eventID: AEEventID) {
+        let target = NSAppleEventDescriptor(processIdentifier: processIdentifier)
+        let event = NSAppleEventDescriptor(eventClass: kCoreEventClass,
+                                           eventID: kAEReopenApplication,
+                                           targetDescriptor: target,
+                                           returnID: AEReturnID(kAutoGenerateReturnID),
+                                           transactionID: AETransactionID(kAnyTransactionID))
+        AESendMessage(event.aeDesc, nil, AESendMode(kAENoReply), kAEDefaultTimeout)
+    }
+    
+    func reopen() {
+        sendEvent(eventID: kAEReopenApplication)
+    }
 }
 
 // MARK: - Applications
