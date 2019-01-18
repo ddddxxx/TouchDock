@@ -19,7 +19,7 @@
 //
 
 import Cocoa
-import TouchBarHelper
+import DFRPrivate
 
 class TouchBarController: NSObject, NSTouchBarDelegate {
     
@@ -27,6 +27,7 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     
     let touchBar = NSTouchBar()
     weak var appScrubber: AppScrubberTouchBarItem?
+    let item = NSCustomTouchBarItem(identifier: .systemTrayItem)
     
     var keyMonitor: Any?
     
@@ -43,9 +44,10 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     private override init() {
         super.init()
         touchBar.delegate = self
+        touchBar.customizationIdentifier = .mainTouchBar
         touchBar.defaultItemIdentifiers = [.appScrubber, .preferences, .quitApp]
-        touchBar.customizationIdentifier = NSTouchBar.CustomizationIdentifier("ddddxxx.TouchDock")
         touchBar.customizationAllowedItemIdentifiers = [.appScrubber, .preferences, .quitApp]
+        touchBar.customizationRequiredItemIdentifiers = [.preferences]
         
         keyMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
             if let key = defaults.activateKey {
@@ -59,20 +61,19 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     }
     
     func setupControlStripPresence() {
-        DFRSystemModalShowsCloseBoxWhenFrontMost(true)
-        let item = NSCustomTouchBarItem(identifier: .systemTrayItem)
+        NSTouchBar.setSystemModalShowsCloseBoxWhenFrontMost(true)
         item.view = NSButton(image: #imageLiteral(resourceName: "TouchBar.Apps"), target: self, action: #selector(presentTouchBar))
-        item.addSystemTray()
-        DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
+        item.addToSystemTray()
+        item.setControlStripPresence(true)
     }
     
     func updateControlStripPresence() {
-        DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
+        item.setControlStripPresence(true)
     }
     
     @objc private func presentTouchBar() {
         appScrubber?.updateRunningApplication(animated: false)
-        touchBar.presentSystemModal(systemTrayItemIdentifier: .systemTrayItem)
+        touchBar.presentAsSystemModal(for: item)
     }
     
     private func dismissTouchBar() {

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BB19EDC01EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */; };
+		BB5863FA21F1CCCC0084D2C0 /* DFRPrivate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB5863F921F1CCCC0084D2C0 /* DFRPrivate.framework */; };
+		BB5863FB21F1CCCC0084D2C0 /* DFRPrivate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BB5863F921F1CCCC0084D2C0 /* DFRPrivate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BBCC721B1FFBB53F0090C7E0 /* Then.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCC721A1FFBB53F0090C7E0 /* Then.swift */; };
 		BBE1CE511EE27A4300445D54 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1CE501EE27A4300445D54 /* AppDelegate.swift */; };
 		BBE1CE551EE27A4300445D54 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BBE1CE541EE27A4300445D54 /* Assets.xcassets */; };
@@ -16,8 +18,6 @@
 		BBE1ED911FFBCB820022BD3A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1ED901FFBCB820022BD3A /* Constants.swift */; };
 		BBE1ED931FFBCBEF0022BD3A /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE1ED921FFBCBEF0022BD3A /* Collection+Extension.swift */; };
 		E94DFB7320E1F1FF00BF28EF /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94DFB7220E1F1FF00BF28EF /* Utilities.swift */; };
-		E97AFB5E215CC2C500AF74CD /* TouchBarHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E97AFB5D215CC2C400AF74CD /* TouchBarHelper.framework */; };
-		E97AFB5F215CC2C500AF74CD /* TouchBarHelper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E97AFB5D215CC2C400AF74CD /* TouchBarHelper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,7 +27,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E97AFB5F215CC2C500AF74CD /* TouchBarHelper.framework in Embed Frameworks */,
+				BB5863FB21F1CCCC0084D2C0 /* DFRPrivate.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -36,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		BB19EDBF1EE7A27F00CD05EB /* AppScrubberTouchBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppScrubberTouchBarItem.swift; sourceTree = "<group>"; };
+		BB5863F921F1CCCC0084D2C0 /* DFRPrivate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DFRPrivate.framework; path = Carthage/Build/Mac/DFRPrivate.framework; sourceTree = "<group>"; };
 		BBCC721A1FFBB53F0090C7E0 /* Then.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Then.swift; sourceTree = "<group>"; };
 		BBE1CE4D1EE27A4300445D54 /* TouchDock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchDock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBE1CE501EE27A4300445D54 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		BBE1ED901FFBCB820022BD3A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		BBE1ED921FFBCBEF0022BD3A /* Collection+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Extension.swift"; sourceTree = "<group>"; };
 		E94DFB7220E1F1FF00BF28EF /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		E97AFB5D215CC2C400AF74CD /* TouchBarHelper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TouchBarHelper.framework; path = Carthage/Build/Mac/TouchBarHelper.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E97AFB5E215CC2C500AF74CD /* TouchBarHelper.framework in Frameworks */,
+				BB5863FA21F1CCCC0084D2C0 /* DFRPrivate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,7 +74,7 @@
 		BBCC721D1FFBB9010090C7E0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E97AFB5D215CC2C400AF74CD /* TouchBarHelper.framework */,
+				BB5863F921F1CCCC0084D2C0 /* DFRPrivate.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -83,8 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				BBE1CE4F1EE27A4300445D54 /* TouchDock */,
-				BBE1CE4E1EE27A4300445D54 /* Products */,
 				BBCC721D1FFBB9010090C7E0 /* Frameworks */,
+				BBE1CE4E1EE27A4300445D54 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
