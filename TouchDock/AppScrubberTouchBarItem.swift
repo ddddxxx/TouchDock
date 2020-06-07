@@ -81,7 +81,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
                         let r = runningApplications.remove(at: index)
                         log("remove \(r.localizedName!) at \(index)")
                     }
-                    if let oldIndex = runningApplications.index(of: app) {
+                    if let oldIndex = runningApplications.firstIndex(of: app) {
                         guard oldIndex != index else {
                             return
                         }
@@ -101,7 +101,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
             scrubber.reloadData()
             scrubber.animator().selectedIndex = -1
         }
-        let index = NSWorkspace.shared.frontmostApplication.flatMap(newApplications.index) ?? -1
+        let index = NSWorkspace.shared.frontmostApplication.flatMap(newApplications.firstIndex) ?? -1
         scrubber.selectedIndex = index
     }
     
@@ -173,7 +173,7 @@ private func dockPersistentApplications() -> [NSRunningApplication] {
         if rhs.bundleIdentifier == "com.apple.finder" {
             return false
         }
-        switch ((bundleIDs.index(of: lhs.bundleIdentifier!)), bundleIDs.index(of: rhs.bundleIdentifier!)) {
+        switch ((bundleIDs.firstIndex(of: lhs.bundleIdentifier!)), bundleIDs.firstIndex(of: rhs.bundleIdentifier!)) {
         case (nil, _):
             return false;
         case (_?, nil):

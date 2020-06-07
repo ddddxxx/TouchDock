@@ -19,11 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>0.2.0</string>
 	<key>CFBundleVersion</key>
-<<<<<<< HEAD
-	<string>130</string>
-=======
-	<string>138</string>
->>>>>>> ec54306... migrate to DFRPrivate
+	<string>141</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>LSUIElement</key>

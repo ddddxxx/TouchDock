@@ -28,8 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSTouchBarProvider {
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        TouchBarController.shared.setupControlStripPresence()
+        _ = TouchBarController.shared
     }
-    
 }
 
