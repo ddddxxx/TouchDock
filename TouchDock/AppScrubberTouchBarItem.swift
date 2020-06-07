@@ -81,7 +81,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
                         let r = runningApplications.remove(at: index)
                         log("remove \(r.localizedName!) at \(index)")
                     }
-                    if let oldIndex = runningApplications.index(of: app) {
+                    if let oldIndex = runningApplications.firstIndex(of: app) {
                         guard oldIndex != index else {
                             return
                         }
@@ -101,7 +101,7 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
             scrubber.reloadData()
             scrubber.animator().selectedIndex = -1
         }
-        let index = NSWorkspace.shared.frontmostApplication.flatMap(newApplications.index) ?? -1
+        let index = NSWorkspace.shared.frontmostApplication.flatMap(newApplications.firstIndex) ?? -1
         scrubber.selectedIndex = index
     }
     
@@ -121,12 +121,31 @@ class AppScrubberTouchBarItem: NSCustomTouchBarItem, NSScrubberDelegate, NSScrub
     }
     
     public func didFinishInteracting(with scrubber: NSScrubber) {
-        guard scrubber.selectedIndex > 0 else {
+        guard scrubber.selectedIndex >= 0 else {
             return
         }
-        runningApplications[scrubber.selectedIndex].activate(options: .activateIgnoringOtherApps)
+        let app = runningApplications[scrubber.selectedIndex]
+        app.reopen()
+        app.activate(options: .activateIgnoringOtherApps)
     }
     
+}
+
+extension NSRunningApplication {
+    
+    func sendEvent(eventID: AEEventID) {
+        let target = NSAppleEventDescriptor(processIdentifier: processIdentifier)
+        let event = NSAppleEventDescriptor(eventClass: kCoreEventClass,
+                                           eventID: kAEReopenApplication,
+                                           targetDescriptor: target,
+                                           returnID: AEReturnID(kAutoGenerateReturnID),
+                                           transactionID: AETransactionID(kAnyTransactionID))
+        AESendMessage(event.aeDesc, nil, AESendMode(kAENoReply), kAEDefaultTimeout)
+    }
+    
+    func reopen() {
+        sendEvent(eventID: kAEReopenApplication)
+    }
 }
 
 // MARK: - Applications
@@ -154,7 +173,7 @@ private func dockPersistentApplications() -> [NSRunningApplication] {
         if rhs.bundleIdentifier == "com.apple.finder" {
             return false
         }
-        switch ((bundleIDs.index(of: lhs.bundleIdentifier!)), bundleIDs.index(of: rhs.bundleIdentifier!)) {
+        switch ((bundleIDs.firstIndex(of: lhs.bundleIdentifier!)), bundleIDs.firstIndex(of: rhs.bundleIdentifier!)) {
         case (nil, _):
             return false;
         case (_?, nil):

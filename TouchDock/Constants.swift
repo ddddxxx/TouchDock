@@ -41,6 +41,10 @@ extension NSTouchBarItem.Identifier {
     static let systemTrayItem = NSTouchBarItem.Identifier("ddddxxx.TouchDock.touchBar.systemTrayItem")
 }
 
+extension NSTouchBar.CustomizationIdentifier {
+    static let mainTouchBar = NSTouchBar.CustomizationIdentifier("ddddxxx.TouchDock")
+}
+
 let activateKeyIndex = "ActivateKeyIndex"
 let appScrubberOrderIndex = "AppScrubberOrderIndex"
 let appScrubberModeIndex = "AppScrubberModeIndex"

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "TouchBarHelper",
+        "repositoryURL": "https://github.com/ddddxxx/TouchBarHelper",
+        "state": {
+          "branch": null,
+          "revision": "003d41193ac1c6ab9cc570a1923587298014bf1d",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

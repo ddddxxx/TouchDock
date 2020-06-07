@@ -21,11 +21,10 @@
 import Cocoa
 import TouchBarHelper
 
-class TouchBarController: NSObject, NSTouchBarDelegate {
+class TouchBarController: TouchBarSystemModalController {
     
     static let shared = TouchBarController()
     
-    let touchBar = NSTouchBar()
     weak var appScrubber: AppScrubberTouchBarItem?
     
     var keyMonitor: Any?
@@ -33,20 +32,15 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
     var isHotKeyDown = false {
         didSet {
             if !oldValue && isHotKeyDown {
-                self.presentTouchBar()
+                self.present()
             } else if oldValue && !isHotKeyDown {
-                self.dismissTouchBar()
+                self.dismiss()
             }
         }
     }
     
-    private override init() {
+    override init() {
         super.init()
-        touchBar.delegate = self
-        touchBar.defaultItemIdentifiers = [.appScrubber, .preferences, .quitApp]
-        touchBar.customizationIdentifier = NSTouchBar.CustomizationIdentifier("ddddxxx.TouchDock")
-        touchBar.customizationAllowedItemIdentifiers = [.appScrubber, .preferences, .quitApp]
-        
         keyMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.flagsChanged]) { event in
             if let key = defaults.activateKey {
                 self.isHotKeyDown = event.modifierFlags.contains(key)
@@ -54,29 +48,24 @@ class TouchBarController: NSObject, NSTouchBarDelegate {
         }
     }
     
+    override func touchBarDidLoad() {
+        touchBar?.customizationIdentifier = .mainTouchBar
+        touchBar?.defaultItemIdentifiers = [.appScrubber, .preferences, .quitApp]
+        touchBar?.customizationAllowedItemIdentifiers = [.appScrubber, .preferences, .quitApp]
+        touchBar?.customizationRequiredItemIdentifiers = [.preferences]
+        
+        systemTrayItem = NSCustomTouchBarItem(identifier: .systemTrayItem)
+        systemTrayItem?.view = NSButton(image: #imageLiteral(resourceName: "TouchBar.Apps"), target: self, action: #selector(presentTouchBar))
+    }
+    
     deinit {
         keyMonitor.map(NSEvent.removeMonitor)
     }
     
-    func setupControlStripPresence() {
-        DFRSystemModalShowsCloseBoxWhenFrontMost(true)
-        let item = NSCustomTouchBarItem(identifier: .systemTrayItem)
-        item.view = NSButton(image: #imageLiteral(resourceName: "TouchBar.Apps"), target: self, action: #selector(presentTouchBar))
-        item.addSystemTray()
-        DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
-    }
-    
-    func updateControlStripPresence() {
-        DFRElementSetControlStripPresenceForIdentifier(.systemTrayItem, true)
-    }
-    
+    // TODO: customization point
     @objc private func presentTouchBar() {
         appScrubber?.updateRunningApplication(animated: false)
-        touchBar.presentSystemModal(systemTrayItemIdentifier: .systemTrayItem)
-    }
-    
-    private func dismissTouchBar() {
-        touchBar.minimizeSystemModal()
+        present()
     }
     
     @objc private func showPreferencesWindow() {
