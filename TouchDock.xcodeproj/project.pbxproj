@@ -409,8 +409,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ddddxxx/TouchBarHelper";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.1.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
